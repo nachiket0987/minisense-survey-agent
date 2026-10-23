@@ -1,5 +1,97 @@
 # Execution and review evidence
 
+## Windows continuation — 23 October 2026
+
+The sections below this continuation retain historical Linux evidence. Current
+Windows verification uses Python 3.12.11, CPU PyTorch 2.6.0+cpu, uv 0.7.12 and
+the installed dependency snapshot in windows_environment.txt. No GPU was assumed;
+`torch.cuda.is_available()` returned false. Python was installed under ignored
+`.tools/python`; the virtual environment is ignored `.venv`.
+
+Actual commands executed from the repository root (installations sequential):
+
+```powershell
+uv python install 3.12 --install-dir .tools/python
+.\.tools\python\cpython-3.12.11-windows-x86_64-none\python.exe -m venv .venv
+uv pip install --python .venv/Scripts/python.exe torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+uv pip install --python .venv/Scripts/python.exe -r requirements.txt
+.\.venv\Scripts\python.exe -m minisense validate
+.\.venv\Scripts\python.exe -m minisense ingest
+.\.venv\Scripts\python.exe -m pytest -q
+.\.venv\Scripts\python.exe -m pip check
+.\.venv\Scripts\python.exe -m minisense --help
+# Same-shell credentials were mapped in memory; never printed or persisted.
+.\.venv\Scripts\python.exe -m minisense --provider llm ask "What are the top three customer complaints in June 2026?" --json
+.\.venv\Scripts\python.exe -m minisense --provider llm evaluate --output docs/live/evaluation.json
+```
+
+Results: the 100,000-response dataset passed full validation. Independent
+regeneration into `.cache/regenerated.json` matched SHA256
+`aa960ec95a9e2c87badc4c1c0a0d17ee8a7ea620407a04610f31b55b48783e36`.
+Actual all-MiniLM-L6-v2 ingestion built seven 384-dimensional vectors; repeating
+ingestion returned `rebuilt: false`. All 29 original tests passed locally before
+the continuation fixes. Final expanded suite: **47 passed**. `pip check`: no
+broken requirements. Final live assessment: **3 questions, 58 checks passed**.
+The separate paraphrase and unknown-business/exact-date probes also passed; see
+live/probes.json. None of these live runs uses the deterministic demo planner.
+
+Groq's authenticated model-list endpoint confirmed openai/gpt-oss-20b active. The
+user explicitly confirmed free-tier use of the existing GROQ_API_KEY. Each command
+mapped it to MINISENSE_API_KEY within that process; no terminal inheritance was
+assumed. No dotenv loader, paid capacity or fine-tuning job was introduced.
+
+Observed failures and focused fixes (regressions run failing before the fix):
+
+- pip 26.2.2 and 25.0.1 both hit WinError 5 replacing SymPy RECORD metadata.
+  Direct replacement succeeded; the preinstalled uv completed sequential installs.
+  Host-installed package cache files were inaccessible to the sandbox account;
+  verification ran with approved host execution. This is an agent sandbox detail,
+  not a requirement for users to run Python as Administrator.
+- Live planner returned invalid agent/operation pairs, nullable numeric defaults,
+  omitted RAG, and confused target comparisons with period comparisons. Explicit
+  task-role guidance plus at most three schema-validation attempts now preserve
+  rejected requests without running invalid plans. Semantic correctness is still
+  checked separately in evaluation; schema validity alone is insufficient.
+- A real 429 exposed weak diagnostics and quota handling. Status-only errors and
+  at most two retries for a numeric Retry-After <=60 seconds retain free-tier limits.
+- Evaluator rejected alternative task ordering/additional context tasks, crashed
+  on missing data, and discarded partial failures. It now checks DAG dependencies,
+  required scope/cardinality/specialists, independent statistics, actual tool
+  outputs and final policy grounding, and writes each question incrementally.
+- Failure records shared a mutable provider buffer. Deep snapshots now retain the
+  correct question's trace. Attempt-01's affected partial trace is explicitly
+  marked unreliable in live/README.md.
+- Live summary selection omitted one evidence item. Bounded validated feedback
+  now permits correction; every fact must still appear once and recommendations
+  remain allowlisted. Invalid selections never become successful demo answers.
+- Fresh review found wrong top-three cardinality, misleading labels for partial
+  date ranges, and an invalid HTTP-200 message envelope. Focused regressions now
+  cover these cases. A read-only reviewer inspected source, callers, tests and
+  requirements; its three concrete findings were fixed.
+
+Synthesis decision: the assignment asks for a coherent narrative paragraph and
+structured specialist output, not unrestricted generation. The current summary
+meets that requirement by giving the LLM metrics and retrieved passages, validating
+its evidence ordering/recommendation, and preserving exact facts and complete
+policy qualifiers in Python. Its style is constrained and verbose; no claim of
+free generative rewriting is made. Policy thresholds remain tied to the supplied
+FAQ fixture, and synthetic annotations do not prove real-text classification.
+
+Ponytail was used manually after reading current upstream implementation/review
+skills, README, INSTALL.md and MIT license. Its documented Codex plugin setup
+requires marketplace changes, lifecycle-hook trust and a new thread; this session
+kept configuration workspace-scoped and applied the documented smallest-complete-
+change and connected-code-review guidance. No Ponytail code was redistributed.
+
+Publication target was changed by explicit user instruction to
+`nachiket0987/minisense-survey-agent`. With approved network access, gh is signed
+in as nachiket0987; earlier sandbox-only auth checks falsely reported an invalid
+token. The connected app remains psychochan. No repository belonging to another
+account is overwritten. Clean published-checkout evidence is recorded below once
+executed.
+
+## Historical Linux execution
+
 Executed on Linux, Python 3.12, 23 October 2026. Final commands use `.venv-clean`
 because the initial environment was replaced after a dependency-install conflict.
 The README uses the conventional `.venv` directory for a clean user installation.

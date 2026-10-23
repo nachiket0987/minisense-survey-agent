@@ -27,6 +27,16 @@ and a supported recommendation, but cannot rewrite numeric statements.
 
 ## Data and definitions
 
+Windows continuation: genuine Groq GPT-OSS-20B executions are stored separately
+under docs/live. Provider traces record model requests/responses (excluding
+authentication and reasoning) alongside Python tool executions. Plans and evidence
+selections get at most three validation attempts; malformed plans are never run.
+Numeric Retry-After values up to 60 seconds permit two 429 retries. HTTP bodies
+and headers are excluded from errors. Evaluation snapshots each failure and saves
+each question before continuing, validating scopes/results independently of DAG
+listing order. Additional retrieval tasks are permitted, while required specialists,
+requested top-three cardinality and comparison dependencies remain checked.
+
 Generate 100,000 JSON records using seed 42 across May and June 2026, with uneven
 monthly volume. GreenLeaf Bistro is the only business. Ratings are CSAT observations:
 report mean rating out of five and separately the percentage rating four or five.

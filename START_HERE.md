@@ -35,17 +35,18 @@ Open a PowerShell terminal in this folder:
 ```powershell
 py -3.12 -m venv .venv
 $py = ".\.venv\Scripts\python.exe"
-& $py -m pip install --upgrade pip
-& $py -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
-& $py -m pip install -r requirements.txt
+uv pip install --python $py torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+uv pip install --python $py -r requirements.txt
 & $py -m minisense validate
 & $py -m minisense ingest
 & $py -m pytest -q
 ```
 
 The dataset is already included; `python -m minisense generate` can recreate it.
-The previous Linux test run passed 29 tests. That is historical evidence, not a
-claim that your Windows installation has already passed.
+If Python 3.12 is unavailable, README documents the tested workspace-local uv
+bootstrap. Windows continuation passed 47 tests, real model ingestion and all
+three live Groq questions (58 checks). See docs/verification.md for evidence and
+docs/live for actual traces. Historical demo artifacts remain unchanged.
 
 ## LLM credentials
 

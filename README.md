@@ -4,11 +4,12 @@ MiniSense answers business questions about 100,000 synthetic GreenLeaf Bistro
 survey responses and a product FAQ. Built by **Nachiket Lohar** for the
 **omniSense technical assessment**.
 
-The CLI has a working deterministic demo path and an optional OpenAI-compatible
+The CLI has a deterministic demo path and an OpenAI-compatible
 LLM path. Demo mode uses **real sentence-transformers embeddings and dense vector
 retrieval**, not a simulated retriever. Its planner and narrative renderer are
-explicitly deterministic. Live LLM planning, function calling and synthesis need
-a configured endpoint; see verification status before treating them as validated.
+explicitly deterministic. Live Groq planning, API function calling, Python tool
+execution and constrained synthesis are recorded separately in
+[live evaluation](docs/live/rag_evaluation.md). See verification for actual results.
 No paid service is invoked by default, and ChatGPT Plus is not an API credential.
 
 ## Features and architecture
@@ -33,25 +34,36 @@ See [design](docs/design.md), [requirements](docs/requirements_matrix.md),
 
 ## Prerequisites and installation
 
-Python 3.11 or 3.12 (tested with 3.12), Git, internet for initial package/model
+Python 3.12 (tested on Windows with 3.12.11), Git, internet for initial package/model
 downloads, and enough disk space for PyTorch. No GPU is required for the demo.
 Run commands from the repository root. On Windows, open that folder in VS Code,
 open a PowerShell terminal, and select `.venv\Scripts\python.exe` as the interpreter.
 Activation is optional, avoiding PowerShell execution-policy changes.
 
 ```powershell
+# If Python 3.12 is installed:
 py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install --upgrade pip
-.\.venv\Scripts\python.exe -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+# Otherwise, using uv (https://docs.astral.sh/uv/getting-started/installation/):
+# uv python install 3.12 --install-dir .tools/python
+# $pythonRoot = Get-ChildItem .tools/python -Directory -Filter 'cpython-3.12*' | Select-Object -First 1
+# & "$($pythonRoot.FullName)/python.exe" -m venv .venv
+
+# Run installations one at a time. uv 0.7.12 was used on this Windows machine.
+uv pip install --python .venv/Scripts/python.exe torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+uv pip install --python .venv/Scripts/python.exe -r requirements.txt
 .\.venv\Scripts\python.exe -m minisense generate
 .\.venv\Scripts\python.exe -m minisense validate
 .\.venv\Scripts\python.exe -m minisense ingest
 .\.venv\Scripts\python.exe -m minisense ask "What are the top three customer complaints in June 2026?" --json
 .\.venv\Scripts\python.exe -m minisense evaluate
-.\.venv\Scripts\python.exe -m pytest -m "not integration" -q
-.\.venv\Scripts\python.exe -m pytest -m integration -q
+.\.venv\Scripts\python.exe -m pytest -q
+.\.venv\Scripts\python.exe -m pip check
 ```
+
+Both tested pip versions (25.0.1 and 26.2.2) encountered Windows `WinError 5`
+while replacing SymPy RECORD metadata; uv completed the sequential installation.
+Do not run competing installers in one environment. The installed dependency
+snapshot is in [windows_environment.txt](docs/windows_environment.txt).
 
 Linux/macOS: create the environment with `python3 -m venv .venv`, then replace the
 Windows executable above with `.venv/bin/python`. On Linux the tested CPU wheel
@@ -100,23 +112,44 @@ See [dataset validation](docs/dataset_validation.json) for counts and hash.
 
 ## Configuring an LLM
 
-Use an existing local or otherwise authorized OpenAI-compatible server that
-supports JSON output and tool calling. `.env.example` documents the variables;
-export them explicitly (the app does not silently load `.env`).
+Use an authorized OpenAI-compatible server supporting JSON output and tool calls.
+Groq's `openai/gpt-oss-20b` was confirmed through its authenticated model-list API
+and tested on the user's approved free-tier account. Confirm your own free quota
+before running. MiniSense neither enables billing nor switches to paid capacity.
+`.env.example` documents settings; the app does not load `.env`.
 
 ```powershell
-$env:MINISENSE_BASE_URL = "http://localhost:11434/v1"
-$env:MINISENSE_MODEL = "your-installed-tool-capable-model"
-# Set MINISENSE_API_KEY only if your chosen server needs it.
+$env:MINISENSE_BASE_URL = "https://api.groq.com/openai/v1"
+$env:MINISENSE_MODEL = "openai/gpt-oss-20b"
+# If GROQ_API_KEY already exists in THIS process, map it without displaying it:
+if ($env:GROQ_API_KEY) {
+    $env:MINISENSE_API_KEY = $env:GROQ_API_KEY
+} else {
+    $secureKey = Read-Host "Groq API key (free-tier account)" -AsSecureString
+    $env:MINISENSE_API_KEY = [System.Net.NetworkCredential]::new("", $secureKey).Password
+    Remove-Variable secureKey
+}
+$env:PYTHONUTF8 = "1"
 .\.venv\Scripts\python.exe -m minisense --provider llm ask "What are the top three complaints in June 2026?" --json
-.\.venv\Scripts\python.exe -m minisense --provider llm evaluate --output docs/llm_evaluation.json
+.\.venv\Scripts\python.exe -m minisense --provider llm evaluate --output docs/live/evaluation.json
 ```
 
-The user configures and starts that server separately. Compatibility is not
-assumed for every model. Invalid plans, unrecognized tools, changed tool filters,
+Run credential-dependent commands in the same terminal as this setup. Variables
+set in VS Code's terminal do not necessarily reach Codex's separate shell. Codex
+sign-in does not grant this application API access. Never paste keys into chat;
+never echo them, put them in command arguments, or commit `.env`. No dotenv loader
+or new configuration-precedence rule was introduced. For a local server, replace
+the base URL/model and set a key only if required.
+
+Compatibility is not assumed for every model. Invalid plans receive at most
+three schema-validation attempts. Unrecognized tools, changed tool filters,
 invalid evidence selections and unavailable providers fail explicitly rather than
 falling back to a fabricated successful answer. Remote providers can charge fees;
-no endpoint is selected or paid call made for this submission.
+the documented live runs used the user's explicitly approved free-tier account.
+HTTP diagnostics omit response bodies and authentication headers. A 429 with a
+numeric Retry-After of at most 60 seconds gets at most two retries; other quota
+failures stop. Evaluation saves each question, including safe partial failures,
+before continuing. Real model exchanges and Python executions are distinct fields.
 
 ## Fine tuning design
 
@@ -178,7 +211,10 @@ understanding system. Production text classification is proposed, not implemente
 analytics relies on synthetic annotations. Changes are descriptive, not causal
 or statistically significant claims. Dataset generation is deterministic; model
 embeddings may vary slightly across hardware/library revisions. No fine-tuning job
-or Windows runtime test was performed in this Linux environment.
+was performed. Windows runtime evidence is in docs/verification.md. The constrained
+summary is a coherent paragraph built from validated statements: the model orders
+evidence and selects a recommendation; it does not freely rewrite facts. This meets
+the assignment's structured-output/narrative requirement with limited style.
 
 ## References and attribution
 

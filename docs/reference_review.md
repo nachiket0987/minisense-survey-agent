@@ -101,3 +101,20 @@ license notice needs redistribution; dependencies retain their own upstream
 licenses. MiniSense's original code is MIT licensed by its maintainer.
 
 Final scan and review evidence will be recorded in `docs/verification.md`.
+
+## Windows continuation of Ponytail guidance
+
+Re-read upstream README, INSTALL.md, skills/ponytail/SKILL.md,
+skills/ponytail-review/SKILL.md and LICENSE. GitHub API confirms the same revision
+09c434ab73ca43761c5d8b0c5d341926c2fba710. Applied the documented manual workflow:
+read connected callers before changes, preserve validation, write focused
+regressions, prefer existing code, and review concrete failure cases. A fresh
+read-only reviewer found wrong top-three cardinality, misleading range labels and
+a malformed provider envelope; each received a failing regression and a fix.
+No global plugin/configuration was changed and no upstream code redistributed.
+Codex plugin install requires marketplace setup, hook trust and a new session;
+this ongoing workspace-scoped continuation used manual guidance as authorized.
+Upstream: https://github.com/DietrichGebert/ponytail
+
+User explicitly changed the publication account to nachiket0987. Existing author
+history and maintainer Nachiket Lohar remain intact; no contact email was added.
