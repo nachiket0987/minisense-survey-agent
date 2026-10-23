@@ -26,6 +26,6 @@
   Independent evaluation checks dates, business filters, requested cardinality,
   statistics, comparison dependencies, actual tool outputs and cited policy use.
   Invalid plans/selections get bounded correction; failures remain failures.
-- Qwen/LoRA is a 424-word design. The optional MiniLM encoder baseline has an executed CPU smoke run with poor toy metrics; it is not a deployed classifier. Human-reviewed
+- Qwen/LoRA is a 424-word design. The MiniLM classifier now has a trained synthetic held-out benchmark, validation checkpoint selection and calibrated abstention; synthetic gate success is separate from real-data deployment approval. Human-reviewed
   labels, leakage-resistant splits, macro-F1 and critical-class recall gates would
   come before shadow/canary rollout of a versioned adapter.

@@ -1,0 +1,426 @@
+{
+  "purpose": "CPU classifier assessment; synthetic or smoke data cannot establish production quality",
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "method": "full encoder fine-tuning plus classification head",
+  "device": "cpu",
+  "seed": 42,
+  "epochs_requested": 8,
+  "epochs": 8,
+  "batch_size": 16,
+  "learning_rate": 5e-05,
+  "max_length": 128,
+  "optimizer_steps": 800,
+  "mean_train_loss": 0.2114125031407457,
+  "encoder_weights_changed": true,
+  "deployment_ready": false,
+  "best_epoch": 6,
+  "checkpoint_selection": "validation macro-F1, then validation loss; never test metrics",
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.3499893581867217,
+      "validation_macro_f1": 0.9447041458187955,
+      "validation_loss": 0.6598401069641113
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.22652240060269832,
+      "validation_macro_f1": 0.9723251791450457,
+      "validation_loss": 0.1581653207540512
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.05111479766666889,
+      "validation_macro_f1": 0.9743447425223558,
+      "validation_loss": 0.10305317491292953
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.02472150629386306,
+      "validation_macro_f1": 0.9743447425223558,
+      "validation_loss": 0.09362445771694183
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.015109100071713328,
+      "validation_macro_f1": 0.9743447425223558,
+      "validation_loss": 0.09712973982095718
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.01039481851272285,
+      "validation_macro_f1": 0.9743447425223558,
+      "validation_loss": 0.09035288542509079
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.0076006915373727675,
+      "validation_macro_f1": 0.9743447425223558,
+      "validation_loss": 0.10223235934972763
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.005847352254204452,
+      "validation_macro_f1": 0.9743447425223558,
+      "validation_loss": 0.10511072725057602
+    }
+  ],
+  "confidence_policy": {
+    "temperature": 0.5,
+    "threshold": 0.5,
+    "calibrated": true,
+    "source": "separate calibration split",
+    "target_accepted_accuracy": 0.95
+  },
+  "data_provenance": "synthetic",
+  "split_counts": {
+    "train": 1600,
+    "validation": 512,
+    "test": 800,
+    "calibration": 512
+  },
+  "input_sha256": {
+    "train": "6168c243ef42379029fa8333ca107190d0584cd11ba647d6b2d9063b63f6f0dc",
+    "validation": "4332d85ecd132055b6602deae51f94efa1707187f363a869487521ebafe594fe",
+    "test": "90b9eb80ff9f4d972c7700e3b47db5561d958101be281733e418c480fcd2f73d",
+    "calibration": "535ccfe2f4595e8178f71a77c43c324b607773e345c20fbdf43529fe967917df"
+  },
+  "validation": {
+    "accuracy": 0.974609375,
+    "macro_f1": 0.9743447425223558,
+    "per_class": [
+      {
+        "label": "Positive-Food",
+        "support": 64,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": "Negative-Food",
+        "support": 64,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": "Negative-Wait",
+        "support": 64,
+        "precision": 1.0,
+        "recall": 0.796875,
+        "f1": 0.8869565217391304
+      },
+      {
+        "label": "Positive-Staff",
+        "support": 64,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": "Negative-Staff",
+        "support": 64,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": "Negative-Order",
+        "support": 64,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": "Negative-Value",
+        "support": 64,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": "Neutral-Other",
+        "support": 64,
+        "precision": 0.8311688311688312,
+        "recall": 1.0,
+        "f1": 0.9078014184397163
+      }
+    ],
+    "confusion_matrix": [
+      [
+        64,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        64,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        51,
+        0,
+        0,
+        0,
+        0,
+        13
+      ],
+      [
+        0,
+        0,
+        0,
+        64,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        64,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        64,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        64,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        64
+      ]
+    ],
+    "selective": {
+      "accepted": 512,
+      "abstained": 0,
+      "coverage": 1.0,
+      "accepted_accuracy": 0.974609375,
+      "mean_confidence": 0.9982376098632812
+    }
+  },
+  "test": {
+    "accuracy": 0.9675,
+    "macro_f1": 0.9669413081070084,
+    "per_class": [
+      {
+        "label": "Positive-Food",
+        "support": 100,
+        "precision": 1.0,
+        "recall": 0.74,
+        "f1": 0.8505747126436781
+      },
+      {
+        "label": "Negative-Food",
+        "support": 100,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": "Negative-Wait",
+        "support": 100,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": "Positive-Staff",
+        "support": 100,
+        "precision": 0.7936507936507936,
+        "recall": 1.0,
+        "f1": 0.8849557522123894
+      },
+      {
+        "label": "Negative-Staff",
+        "support": 100,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": "Negative-Order",
+        "support": 100,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": "Negative-Value",
+        "support": 100,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": "Neutral-Other",
+        "support": 100,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    ],
+    "confusion_matrix": [
+      [
+        74,
+        0,
+        0,
+        26,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100
+      ]
+    ],
+    "selective": {
+      "accepted": 800,
+      "abstained": 0,
+      "coverage": 1.0,
+      "accepted_accuracy": 0.9675,
+      "mean_confidence": 0.9958687424659729
+    }
+  },
+  "assessment_gates": {
+    "macro_f1": true,
+    "negative_recall": true,
+    "sufficient_class_support": true,
+    "coverage": true,
+    "selective_accuracy": true
+  },
+  "assessment_ready": true,
+  "synthetic_data_manifest": {
+    "provenance": "synthetic template-generated assessment benchmark, not human-reviewed",
+    "seed": 42,
+    "template_families_disjoint": true,
+    "splits": {
+      "train": {
+        "count": 1600,
+        "families": 64,
+        "sha256": "6168c243ef42379029fa8333ca107190d0584cd11ba647d6b2d9063b63f6f0dc"
+      },
+      "validation": {
+        "count": 512,
+        "families": 24,
+        "sha256": "4332d85ecd132055b6602deae51f94efa1707187f363a869487521ebafe594fe"
+      },
+      "calibration": {
+        "count": 512,
+        "families": 24,
+        "sha256": "535ccfe2f4595e8178f71a77c43c324b607773e345c20fbdf43529fe967917df"
+      },
+      "test": {
+        "count": 800,
+        "families": 32,
+        "sha256": "90b9eb80ff9f4d972c7700e3b47db5561d958101be281733e418c480fcd2f73d"
+      }
+    }
+  }
+}

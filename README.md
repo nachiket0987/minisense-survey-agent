@@ -32,8 +32,8 @@ No paid service is invoked by default, and ChatGPT Plus is not an API credential
 See [design](docs/design.md), [requirements](docs/requirements_matrix.md),
 [reference review](docs/reference_review.md), and [verification](docs/verification.md).
 For the assessment discussion, see [interview notes](docs/interview_notes.md).
-The [verification report](docs/verification.md#latest-submission-completion) records
-the latest 55-test suite, documentation polish and optional CPU training evidence.
+The [verification report](docs/verification.md#latest-classifier-assessment) records
+the latest 61-test suite, documentation polish and optional CPU training evidence.
 
 ## Prerequisites and installation
 
@@ -216,15 +216,16 @@ rewriting the training pipeline.
 
 ## Optional executable fine-tuning baseline
 
-An isolated eight-label CPU encoder baseline is implemented in
-`minisense/finetune.py`, using the existing dependencies. It validates JSONL inputs,
-rejects cross-split text/group leakage, updates encoder weights, reports held-out
-metrics, saves a checkpoint and reloads it for prediction. See
-[instructions and limitations](docs/finetuning_baseline.md) and
-[actual smoke metrics](docs/finetuning/smoke_training_report.json).
-The 16/8/8 artificial splits verify machinery; test macro-F1 was only 0.0357 and
-the model is explicitly not production-ready. The Qwen/LoRA approach above remains
-a design proposal. No hosted training service or paid resource is used.
+The CPU classifier is trained on a reproducible synthetic benchmark with separate
+template families for training, validation, calibration and testing. It selects
+the best checkpoint using validation only and can abstain on uncertain predictions.
+Test accuracy **0.9675**, macro-F1 **0.9669**, minimum negative-class recall **1.0000**. Accepted-prediction coverage **1.0000**, accepted accuracy **0.9675**.
+The fixed synthetic assessment gates passed; this is not validation on real
+customer feedback. See [training/reproduction details](docs/finetuning_baseline.md)
+and [actual metrics](docs/finetuning/assessment_training_report.json).
+Positive-Food recall remains 0.74; the confidence rule did not catch those errors.
+The original poor smoke result is preserved separately. No hosted training,
+paid resource or automatic production deployment is used.
 
 ## Trade-offs and known limitations
 
@@ -237,7 +238,7 @@ unsupported scopes fail where recognized. It is not a general natural-language
 understanding system. Production text classification is proposed, not implemented;
 analytics relies on synthetic annotations. Changes are descriptive, not causal
 or statistically significant claims. Dataset generation is deterministic; model
-embeddings may vary slightly across hardware/library revisions. Only a small CPU encoder fine-tuning smoke job was performed; it does not establish production quality. Windows runtime evidence is in docs/verification.md. The constrained
+embeddings may vary slightly across hardware/library revisions. CPU encoder training and a synthetic held-out benchmark were executed; production quality on real feedback is unverified. Windows runtime evidence is in docs/verification.md. The constrained
 summary is a coherent paragraph built from validated statements: the model orders
 evidence and selects a recommendation; it does not freely rewrite facts. This meets
 the assignment's structured-output/narrative requirement with limited style.

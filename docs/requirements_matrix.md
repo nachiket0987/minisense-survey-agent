@@ -7,8 +7,8 @@ No live LLM success or training run is implied by a unit test.
 
 Windows continuation: live/evaluation.json passed all three required Groq questions
 and 58 independent checks; live/probes.json records passing paraphrase, exact-date
-and empty-business checks. The complete Windows suite passed 55 tests including
-real embeddings and CPU encoder fine-tuning. Historical demo evidence is preserved. The optional toy baseline is not production validation.
+and empty-business checks. The complete Windows suite passed 61 tests including
+real embeddings and CPU encoder fine-tuning. Historical demo evidence is preserved. The trained synthetic classifier is not production validation on real feedback.
 Publication target is now nachiket0987/minisense-survey-agent, explicitly authorized
 by the user instead of the handoff's original owner.
 
@@ -39,7 +39,7 @@ by the user instead of the handoff's original owner.
 | Three questions with chunks and answers | Evaluation CLI with independent correctness checks | docs/live/evaluation.json, live/rag_evaluation.md | 58 checks across 3 live questions; repeated in clean checkout | Live verified; demo evidence preserved separately |
 | Comment on retrieval strengths/shortfalls | Per-question observations and report | live/rag_evaluation.md; clean-install/rag_evaluation.md | question-specific ranks, scores, adjacent sections and empty queries | Verified against recorded live results |
 | 300–500-word fine-tuning proposal, all six aspects | 424-word proposal embedded in README | [README fine-tuning design](../README.md#fine-tuning-design) | word count and scope review | Verified |
-| Optional fine-tuning code | CPU eight-label full encoder baseline, separate from Qwen/LoRA proposal | minisense/finetune.py; docs/finetuning_baseline.md | real four-step training, encoder updates, held-out metrics, checkpoint prediction; integration test | Executed smoke baseline; production quality not established |
+| Optional fine-tuning code | CPU eight-label full encoder baseline, separate from Qwen/LoRA proposal | minisense/finetune.py; docs/finetuning_baseline.md | reproducible four-way synthetic benchmark, validation checkpoint selection, calibration, abstention, held-out metrics | Synthetic assessment gates passed; real-data production quality unverified |
 | Tests and errors | pytest; clear missing-data/index/provider failures | tests/, __main__.py | full suite and failure-path tests | See verification.md |
 | Reference implementation audit | Five snapshot reviews, real implementation files | reference_review.md | clone SHAs and inspected modules | Complete |
 | Personalization and attribution | Nachiket maintainer, no copied configuration or source | README, pyproject.toml, LICENSE | identity and secret scan | Complete |

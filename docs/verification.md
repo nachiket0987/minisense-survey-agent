@@ -1,6 +1,30 @@
 # Execution and review evidence
 
-## Latest submission completion
+## Latest classifier assessment
+
+The user authorized synthetic data for this improvement. Root cause of the poor
+smoke model: 16 training examples and four updates for a new eight-class head.
+The fixed larger experiment uses 1,600/512/512/800 train/validation/calibration/test
+examples and disjoint core-clause families. Validation alone chooses checkpoints;
+calibration alone chooses confidence policy; test predictions are computed only
+after selection. Test accuracy **0.9675**, macro-F1 **0.9669**, minimum negative-class recall **1.0000**. Accepted-prediction coverage **1.0000**, accepted accuracy **0.9675**. Assessment gates passed.
+See [classifier details](finetuning_baseline.md) and
+[actual report](finetuning/assessment_training_report.json).
+
+The full current suite passed **61 tests**. A fresh read-only reviewer found no
+must-fix issues in the split, selection, calibration and gate logic. A boundary
+regression also prevents float32 rounding from rejecting exactly 95% accepted
+accuracy. No paid service or API key was used. Original smoke, demo, live agent
+and clean-install evidence remains unchanged. Production flags remain false;
+human-reviewed real-data validation and operational approval are still required.
+
+Positive-Food recall was 0.74; all five negative-class recalls were 1.0. The
+confidence rule abstained on none of the 800 test examples, so it did not catch
+the Positive-Food errors. These limits are explicit in the classifier report;
+the test set was not altered or used to tune another run.
+
+
+## Earlier submission completion
 
 This supplements the original agent and clean-install evidence. The existing
 48-test/58-live-check reports remain historical execution records; no new live API
