@@ -44,7 +44,7 @@ by the user instead of the handoff's original owner.
 | Reference implementation audit | Five snapshot reviews, real implementation files | reference_review.md | clone SHAs and inspected modules | Complete |
 | Personalization and attribution | Nachiket maintainer, no copied configuration or source | README, pyproject.toml, LICENSE | identity and secret scan | Complete |
 | GitHub repository and incremental commits | Local implementation branch with staged commits | Git history; public GitHub repository | published branch and independent checkout | Published; full history preserved |
-| Windows VS Code reproduction | PowerShell commands without activation requirement | README.md | 55 tests in original and independent published checkout; CPU training smoke and previous live evaluation | Windows verified; clean-checkout evidence in verification.md |
+| Windows VS Code reproduction | PowerShell commands without activation requirement | README.md | 61 tests in original and independent published checkout; exact synthetic split hash reproduction; previous live evaluation | Windows verified; clean-checkout evidence in verification.md |
 
 ## Assumptions
 

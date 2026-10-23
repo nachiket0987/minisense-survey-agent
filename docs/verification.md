@@ -24,6 +24,16 @@ the Positive-Food errors. These limits are explicit in the classifier report;
 the test set was not altered or used to tune another run.
 
 
+The independent published checkout at source revision c78be04 passed **61 tests**
+in 17.67 seconds and pip check found no broken requirements. Regenerating its
+four synthetic splits reproduced all counts, family counts and input SHA256
+hashes exactly. Its smoke training integration test ran; the full 800-step
+assessment experiment was not repeated there. The earlier original-workspace
+suite passed in 24.63 seconds. Exact output is consolidated in
+[test_results.txt](finetuning/test_results.txt). Model weights and generated raw
+classifier JSONL files remain local and ignored. Neither the classifier work nor
+its reproduction used any hosted LLM API or the exposed credential.
+
 ## Earlier submission completion
 
 This supplements the original agent and clean-install evidence. The existing

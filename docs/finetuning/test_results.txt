@@ -9,5 +9,10 @@ Independent published checkout
 55 passed in 17.69s
 
 Current classifier improvement — original workspace
-.............................................................            [100%]
+.............................................................            [100%]
+
 61 passed in 24.63s
+
+Current classifier improvement — independent published checkout
+.............................................................            [100%]
+61 passed in 17.67s
