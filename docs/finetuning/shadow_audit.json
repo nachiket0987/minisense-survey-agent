@@ -14,8 +14,8 @@
     "Text exceeds the trained 128-token limit; send for human review",
     "Require nonblank text of at most 10000 characters"
   ],
-  "startup_seconds": 6.169141300022602,
-  "warm_median_seconds": 0.007191950047854334,
+  "startup_seconds": 6.191455399966799,
+  "warm_median_seconds": 0.0073174500139430165,
   "timing_scope": "Sequential local CPU, one model instance; not concurrent service load",
   "cases": [
     {
@@ -33,7 +33,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.10995350009761751
+      "seconds": 0.11239409993868321
     },
     {
       "source": "original",
@@ -50,7 +50,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.007677000015974045
+      "seconds": 0.008891500066965818
     },
     {
       "source": "original",
@@ -67,7 +67,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.006647799978964031
+      "seconds": 0.008646400063298643
     },
     {
       "source": "original",
@@ -84,7 +84,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.008610700024291873
+      "seconds": 0.008642600034363568
     },
     {
       "source": "original",
@@ -101,7 +101,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.007812399999238551
+      "seconds": 0.010193899972364306
     },
     {
       "source": "original",
@@ -118,7 +118,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.007092699990607798
+      "seconds": 0.007309400010854006
     },
     {
       "source": "original",
@@ -135,7 +135,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.00620940001681447
+      "seconds": 0.00625229999423027
     },
     {
       "source": "original",
@@ -152,7 +152,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.0069864001125097275
+      "seconds": 0.0064356999937444925
     },
     {
       "source": "original",
@@ -169,7 +169,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.007373100030235946
+      "seconds": 0.008186599938198924
     },
     {
       "source": "original",
@@ -186,7 +186,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.006335700047202408
+      "seconds": 0.006254600011743605
     },
     {
       "source": "original",
@@ -203,7 +203,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.006419200100935996
+      "seconds": 0.007066900026984513
     },
     {
       "source": "original",
@@ -220,7 +220,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.007155200000852346
+      "seconds": 0.007555300020612776
     },
     {
       "source": "original",
@@ -237,7 +237,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.011571799986995757
+      "seconds": 0.010500899981707335
     },
     {
       "source": "original",
@@ -254,7 +254,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.00604660005774349
+      "seconds": 0.006804800010286272
     },
     {
       "source": "original",
@@ -271,7 +271,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.006217599962837994
+      "seconds": 0.006035599973984063
     },
     {
       "source": "original",
@@ -288,7 +288,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.0048479000106453896
+      "seconds": 0.005163900088518858
     },
     {
       "source": "original_ood",
@@ -305,7 +305,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.006242399918846786
+      "seconds": 0.006551300059072673
     },
     {
       "source": "original_ood",
@@ -322,7 +322,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.010177799966186285
+      "seconds": 0.007917199982330203
     },
     {
       "source": "original_ood",
@@ -339,7 +339,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.009039100026711822
+      "seconds": 0.007805599947459996
     },
     {
       "source": "original_ood",
@@ -356,7 +356,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.008456600015051663
+      "seconds": 0.007692700019106269
     },
     {
       "source": "original_ood",
@@ -373,7 +373,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.010198600008152425
+      "seconds": 0.00908670003991574
     },
     {
       "source": "original_ood",
@@ -390,7 +390,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.0100586999906227
+      "seconds": 0.015505800023674965
     },
     {
       "source": "fresh",
@@ -407,7 +407,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.007228700094856322
+      "seconds": 0.007325500017032027
     },
     {
       "source": "fresh",
@@ -424,7 +424,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.008046200033277273
+      "seconds": 0.006368399946950376
     },
     {
       "source": "fresh",
@@ -441,7 +441,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.0063411999726668
+      "seconds": 0.0053792999824509025
     },
     {
       "source": "fresh",
@@ -458,7 +458,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.008902300032787025
+      "seconds": 0.00687180005479604
     },
     {
       "source": "fresh",
@@ -475,7 +475,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.0064064000034704804
+      "seconds": 0.008483300101943314
     },
     {
       "source": "fresh",
@@ -492,7 +492,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.006405399995855987
+      "seconds": 0.0064925000770017505
     },
     {
       "source": "fresh",
@@ -509,7 +509,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.006887100054882467
+      "seconds": 0.00519139994867146
     },
     {
       "source": "fresh",
@@ -526,7 +526,7 @@
         "mode": "shadow",
         "production_validated": false
       },
-      "seconds": 0.013949399930424988
+      "seconds": 0.005638299975544214
     }
   ]
 }

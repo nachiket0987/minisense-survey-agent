@@ -11,10 +11,10 @@ Reuse a loaded model through an explicit runtime object, enforce the trained
 128-token input boundary without truncation, and validate confidence policy.
 This is safe shadow operation, not a claim of production accuracy.
 
-- [ ] Add regression tests for invalid input/config and mandatory review.
-- [ ] Verify tests fail, implement isolated runtime, route CLI inference through it.
-- [ ] Run full suite and frozen challenge in a separate new artifact.
-- [ ] Document limits, verify independent checkout, publish reviewed changes.
+- [x] Add regression tests for invalid input/config and mandatory review.
+- [x] Verify tests fail, implement isolated runtime, route CLI inference through it.
+- [x] Run full suite and frozen challenge in a separate new artifact.
+- [x] Document limits and verify independent checkout; ready for publication.
 
 Production validation remains blocked on independently labeled representative
 real feedback and an operational deployment context. No synthetic report can

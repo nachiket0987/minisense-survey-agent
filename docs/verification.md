@@ -1,5 +1,25 @@
 # Execution and review evidence
 
+## Latest shadow-runtime verification
+
+Source revision c379c43 passed **75 tests in 17.37 seconds** in the original
+workspace and **75 tests in 16.68 seconds** in the independent checkout's own
+environment. Both `pip check` runs reported no broken requirements. The real
+CPU encoder training/inference integration test ran in both suites.
+
+The final offline [shadow audit](finetuning/shadow_audit.json) used the unchanged
+checkpoint SHA256 `0dda191545333934f3bc220ab5a97c29552dce8f694497de9e62efdf9438783d`.
+Candidate accuracy stayed 13/16 on the original in-scope cases and was 7/8 on
+fresh assistant-authored cases. All 30 inputs require review; automatic coverage
+is zero. Empty, oversized and over-token-limit probes were rejected. This is a
+software-safety improvement, not evidence of improved model accuracy or real-data
+production validation. Original agent/live/benchmark/readiness artifacts remain
+unchanged. No retraining, hosted API call or deployment was performed.
+
+Read-only review identified an unstable-temperature edge case. Regression tests
+first reproduced it; the fix bounds temperature to 0.01..100 and checks output
+probabilities for finiteness. Confidence metadata cannot enable automatic labels.
+
 ## Production-readiness challenge audit
 
 On 2026-10-23 the offline frozen-checkpoint

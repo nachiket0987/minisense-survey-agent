@@ -126,7 +126,7 @@ The [shadow audit](finetuning/shadow_audit.json) ran the same frozen checkpoint:
 including six unsupported or ambiguous probes, require review; zero automatic
 decisions means zero automatic coverage, not perfect classifier accuracy.
 Blank, oversized and over-128-token input probes were rejected. Sequential warm
-median latency was 0.0072 seconds; startup was 6.17 seconds. These timings are
+median latency was 0.0073 seconds; startup was 6.19 seconds. These timings are
 local diagnostics, not a concurrency or deployment SLA.
 Reproduce with `.venv/Scripts/python.exe docs/finetuning/run_shadow_audit.py`.
 The original readiness report remains unchanged; its older reproduction script
