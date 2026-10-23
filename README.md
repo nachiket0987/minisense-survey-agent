@@ -31,6 +31,7 @@ No paid service is invoked by default, and ChatGPT Plus is not an API credential
 
 See [design](docs/design.md), [requirements](docs/requirements_matrix.md),
 [reference review](docs/reference_review.md), and [verification](docs/verification.md).
+For the assessment discussion, see [interview notes](docs/interview_notes.md).
 
 ## Prerequisites and installation
 

@@ -1,5 +1,12 @@
 # Implementation ledger
 
+Windows continuation complete: published to the user-approved public repository
+https://github.com/nachiket0987/minisense-survey-agent (`implementation`). Original
+and separate published-checkout suites each passed 48 tests; real Groq assessment
+passed all three questions and 58 checks in both. See continuation_plan.md,
+verification.md, live/ and clean-install/. The original ledger below describes
+the earlier handoff and is preserved as historical context.
+
 Plan: docs/implementation_plan.md. Authority: supplied assignment and user mission.
 
 - Task 1 complete: structured data contracts, seeded generator and exact analytics;

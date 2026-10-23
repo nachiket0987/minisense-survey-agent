@@ -30,7 +30,7 @@ regeneration into `.cache/regenerated.json` matched SHA256
 `aa960ec95a9e2c87badc4c1c0a0d17ee8a7ea620407a04610f31b55b48783e36`.
 Actual all-MiniLM-L6-v2 ingestion built seven 384-dimensional vectors; repeating
 ingestion returned `rebuilt: false`. All 29 original tests passed locally before
-the continuation fixes. Final expanded suite: **47 passed**. `pip check`: no
+the continuation fixes. Final expanded suite: **48 passed**. `pip check`: no
 broken requirements. Final live assessment: **3 questions, 58 checks passed**.
 The separate paraphrase and unknown-business/exact-date probes also passed; see
 live/probes.json. None of these live runs uses the deterministic demo planner.
@@ -89,6 +89,40 @@ in as nachiket0987; earlier sandbox-only auth checks falsely reported an invalid
 token. The connected app remains psychochan. No repository belonging to another
 account is overwritten. Clean published-checkout evidence is recorded below once
 executed.
+
+## Published clean-checkout verification
+
+Public repository: https://github.com/nachiket0987/minisense-survey-agent
+Default branch: implementation. Tested source revision: `7cb3586974599283e1e75a7d904d4df2066f46a1`.
+Cloned from GitHub into sibling minisense-clean-checkout; the clone initially
+contained neither data/responses.json nor data/index. Installed Python 3.12.11
+under that checkout's own .tools/python and created its own .venv. CPU PyTorch
+and requirements were installed sequentially. Standard download caches were
+reused; no original-workspace data, vector index, environment or scripts were used.
+
+The first venv command reported an ensurepip failure. Running
+`python -m ensurepip --upgrade --default-pip` confirmed pip 25.0.1 installed;
+the README now documents this recovery. Generation, full validation, real
+ingestion, CLI --help, demo ask and three-question demo evaluation all succeeded.
+The dataset matched the same SHA256; the fresh index has shape (7, 384).
+Final clean suite: **48 passed**; pip check: no broken requirements.
+
+The first repeated live run exposed another evaluator false rejection: CSAT
+with theme=satisfaction still computes the mean over every scoped response;
+theme only projects the complaint breakdown. A regression was observed failing,
+then fixed while retaining independent count/mean/rate/tool/policy checks.
+That first run remains under clean-install/attempt-01. After pulling the fix,
+all three live questions passed **58 checks** from the clean checkout. Exact
+live traces, retrieved passages, answers and pytest output are in clean-install/.
+The checkout's tracked Git status remained clean after execution because repeat
+outputs use ignored .cache paths. See clean-install/verification.json.
+
+Final audit checked the actual local key is absent from source and artifacts,
+confirmed ignored secrets/environments/data/indexes, preserved historical demo
+artifacts byte-for-byte, and counted FAQ=500 and fine-tuning proposal=424 words.
+No paid service or training job was enabled. The one public-publication auto-review
+rejection was resolved by the user's explicit approval of public visibility and
+the reviewed synthetic statistics, FAQ excerpts and model/tool traces payload.
 
 ## Historical Linux execution
 

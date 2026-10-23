@@ -7,7 +7,7 @@ No live LLM success or training run is implied by a unit test.
 
 Windows continuation: live/evaluation.json passed all three required Groq questions
 and 58 independent checks; live/probes.json records passing paraphrase, exact-date
-and empty-business checks. The complete Windows suite passed 47 tests including
+and empty-business checks. The complete Windows suite passed 48 tests including
 real embeddings. Historical demo evidence is preserved. No training claim is made.
 Publication target is now nachiket0987/minisense-survey-agent, explicitly authorized
 by the user instead of the handoff's original owner.
@@ -44,7 +44,7 @@ by the user instead of the handoff's original owner.
 | Reference implementation audit | Five snapshot reviews, real implementation files | reference_review.md | clone SHAs and inspected modules | Complete |
 | Personalization and attribution | Nachiket maintainer, no copied configuration or source | README, pyproject.toml, LICENSE | identity and secret scan | Complete |
 | GitHub repository and incremental commits | Local implementation branch with staged commits | Git history; supplied bundle | git log and git bundle verify | Local history complete; publication tracked in verification.md |
-| Windows VS Code reproduction | PowerShell commands without activation requirement | README.md | Actual Windows commands, 47 tests and live evaluation | Windows verified; clean-checkout evidence in verification.md |
+| Windows VS Code reproduction | PowerShell commands without activation requirement | README.md | Actual Windows commands, 48 tests and live evaluation | Windows verified; clean-checkout evidence in verification.md |
 
 ## Assumptions
 

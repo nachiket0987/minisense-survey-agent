@@ -1,0 +1,25 @@
+{
+  "repository": "https://github.com/nachiket0987/minisense-survey-agent",
+  "branch": "implementation",
+  "tested_source_commit": "7cb3586974599283e1e75a7d904d4df2066f46a1",
+  "python": "3.12.11",
+  "torch": "2.6.0+cpu",
+  "fresh_venv": true,
+  "separate_python_install": true,
+  "dataset_sha256": "aa960ec95a9e2c87badc4c1c0a0d17ee8a7ea620407a04610f31b55b48783e36",
+  "dataset_regenerated": true,
+  "index_rebuilt": true,
+  "index_shape": [
+    7,
+    384
+  ],
+  "tests_passed": 48,
+  "pip_check": "No broken requirements found",
+  "cli_started": true,
+  "demo_questions": 3,
+  "demo_checks_passed": 58,
+  "live_questions": 3,
+  "live_checks_passed": 58,
+  "clean_git_status_after_execution": true,
+  "cache_note": "Standard package/model download caches reused; no original-workspace data, index or venv used."
+}

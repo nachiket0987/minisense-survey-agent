@@ -22,7 +22,7 @@ branch in the delivered isolated project; preserve demo artifacts and history.
   update README, coverage and verification with Windows evidence, safe diagnostics,
   actual Ponytail use, limits, and precise reproducible commands. Keep fine-tuning
   design within 300–500 words. Review connected callers and secret hygiene.
-- [ ] Delivery: incremental commits; publish to intended empty repository if
+- [x] Delivery: incremental commits; publish to intended empty repository if
   authenticated access becomes available; clone separately, create a fresh venv,
   follow README and repeat generation, ingestion, tests, CLI and live evaluation.
 
@@ -34,3 +34,5 @@ Ponytail: read current upstream SKILL.md, ponytail-review/SKILL.md, INSTALL.md a
 MIT license. Apply its documented manual guidance here. Plugin setup requires
 global marketplace/hook trust and a new thread, so it is not installed in this
 ongoing workspace-scoped session. No upstream code or skill files redistributed.
+
+Completed: published to the user-approved nachiket0987 repository. Separate GitHub clone regenerated data, built real embeddings, passed 48 tests/pip check, started CLI, and passed all three live questions/58 checks. See docs/clean-install.

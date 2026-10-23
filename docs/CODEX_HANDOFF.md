@@ -1,6 +1,6 @@
 # MiniSense continuation brief
 
-Continuation status: Windows setup, real Groq integration, 47-test suite and all
+Continuation status: Windows setup, real Groq integration, 48-test suite and all
 three live questions (58 checks) are verified. See verification.md and live/ for
 current evidence. User changed the published repository to
 https://github.com/nachiket0987/minisense-survey-agent (`implementation`). The
