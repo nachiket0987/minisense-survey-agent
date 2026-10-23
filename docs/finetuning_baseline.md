@@ -68,9 +68,10 @@ coverage on that calibration split. If none qualifies, all predictions abstain.
 The test split is evaluated once after checkpoint and confidence selection.
 Defaults without a calibration split use an explicitly uncalibrated 0.8 threshold.
 Inference returns label, candidate_label, confidence, abstained and review_required;
-the final label is null when confidence is insufficient. Confidence calibration
+the final label is always null in the current shadow runtime. Confidence calibration
 on synthetic data does not guarantee reliability or detect out-of-distribution
-inputs on real feedback. Long inputs are truncated at 128 tokens.
+inputs on real feedback. The runtime rejects inputs exceeding the trained
+128-token limit instead of silently truncating them.
 
 ## Actual held-out results
 
@@ -96,6 +97,40 @@ The original 16/8/8 smoke run remains at
 was only 0.03571. That historical result is preserved rather than overwritten.
 
 ## Deployment boundary
+
+### Shadow runtime hardening
+
+`ClassifierRuntime` loads the local CPU checkpoint once per worker and reuses it.
+It validates the eight-label taxonomy, confidence-policy numeric bounds, finite
+logits, nonblank text, a 10,000-character cap and the trained 128-token boundary.
+It makes no downloads or API calls and does not log input text. Callers must route
+input errors to human review; they must not substitute a guessed final label.
+
+Because the model is unvalidated and confidently wrong on challenge cases, every
+result now has `label: null`, `review_required: true`, `abstained: true`,
+`mode: shadow` and `reason: checkpoint_not_production_validated`.
+`candidate_label`, `confidence` and `confidence_threshold_met` are diagnostic
+suggestions only. There is no switch or checkpoint metadata flag that enables
+automatic decisions. This intentionally changes the old CLI acceptance behavior.
+
+```python
+from minisense.classifier_runtime import ClassifierRuntime
+
+runtime = ClassifierRuntime(".cache/classifier-assessment")
+suggestion = runtime.predict("The staff were friendly.")
+# Display candidate_label to a reviewer; label remains None.
+```
+
+The [shadow audit](finetuning/shadow_audit.json) ran the same frozen checkpoint:
+13/16 original and 7/8 fresh assistant-labeled candidates correct. All 30 inputs,
+including six unsupported or ambiguous probes, require review; zero automatic
+decisions means zero automatic coverage, not perfect classifier accuracy.
+Blank, oversized and over-128-token input probes were rejected. Sequential warm
+median latency was 0.0072 seconds; startup was 6.17 seconds. These timings are
+local diagnostics, not a concurrency or deployment SLA.
+Reproduce with `.venv/Scripts/python.exe docs/finetuning/run_shadow_audit.py`.
+The original readiness report remains unchanged; its older reproduction script
+now writes `.cache/readiness-audit-current.json` to preserve historical evidence.
 
 ### Additional readiness audit (2026-10-23)
 

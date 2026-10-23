@@ -59,7 +59,9 @@ def main():
                      median_seconds=statistics.median(times), maximum_seconds=max(times)),
         cases=records,
     )
-    target = ROOT / "docs/finetuning/readiness_audit.json"
+    # Preserve the committed pre-hardening historical audit on later reruns.
+    target = ROOT / ".cache/readiness-audit-current.json"
+    target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({k: v for k, v in report.items() if k != "cases"}, indent=2))
 

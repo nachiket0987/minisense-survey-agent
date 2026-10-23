@@ -245,25 +245,9 @@ def train_model(train_path, validation_path, test_path, output, epochs=1, *,
 
 
 def predict(checkpoint, text):
-    if not text.strip():
-        raise ValueError("Prediction text must be nonblank")
-    import torch
-    from transformers import AutoModelForSequenceClassification, AutoTokenizer
-
-    torch.set_num_threads(2)
-    tokenizer = AutoTokenizer.from_pretrained(checkpoint, local_files_only=True)
-    model = AutoModelForSequenceClassification.from_pretrained(checkpoint, local_files_only=True).to("cpu").eval()
-    if [model.config.id2label[i] for i in range(len(LABELS))] != list(LABELS):
-        raise ValueError("Checkpoint does not use the MiniSense eight-label taxonomy")
-    policy_path = Path(checkpoint) / "confidence_policy.json"
-    policy = json.loads(policy_path.read_text(encoding="utf-8")) if policy_path.exists() else {"temperature": 1.0, "threshold": 0.8}
-    with torch.no_grad():
-        logits = model(**tokenizer(text, return_tensors="pt", truncation=True, max_length=128)).logits
-    confidence, candidate = torch.softmax(logits / policy["temperature"], dim=-1).max(dim=-1)
-    accepted = confidence.item() >= policy["threshold"]
-    return {"label": LABELS[candidate.item()] if accepted else None, "candidate_label": LABELS[candidate.item()],
-            "confidence": confidence.item(), "abstained": not accepted, "review_required": not accepted,
-            "production_validated": False}
+    from .classifier_runtime import ClassifierRuntime, validate_text
+    text = validate_text(text)
+    return ClassifierRuntime(checkpoint).predict(text)
 
 
 def main():

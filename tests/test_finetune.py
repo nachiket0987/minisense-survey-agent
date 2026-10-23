@@ -114,3 +114,46 @@ def test_real_cpu_encoder_training_and_checkpoint_prediction(tmp_path):
     assert output["label"] in (*LABELS, None)
     assert output["review_required"] == output["abstained"]
     assert output["production_validated"] is False
+    assert output["label"] is None
+    assert output["reason"] == "checkpoint_not_production_validated"
+    from minisense.classifier_runtime import ClassifierRuntime
+    runtime = ClassifierRuntime(tmp_path)
+    model = runtime.model
+    assert runtime.predict("The waiter was rude.")["review_required"]
+    assert runtime.predict("Our meal was delicious.")["label"] is None
+    assert runtime.model is model
+    with pytest.raises(ValueError, match="128-token"):
+        runtime.predict("food " * 150)
+
+
+@pytest.mark.parametrize("text", ["", "   ", None, 42, "a" * 10001])
+def test_runtime_rejects_invalid_input_before_loading_model(text):
+    from minisense.classifier_runtime import validate_text
+    from minisense.finetune import predict
+    with pytest.raises(ValueError):
+        validate_text(text)
+    with pytest.raises(ValueError, match="Require nonblank"):
+        predict("nonexistent-checkpoint-must-not-be-loaded", text)
+
+
+@pytest.mark.parametrize("policy", [
+    {}, {"temperature": 0, "threshold": 0.5},
+    {"temperature": float("nan"), "threshold": 0.5},
+    {"temperature": 1, "threshold": -1},
+    {"temperature": 1, "threshold": float("inf")},
+    {"temperature": True, "threshold": 0.5},
+])
+def test_runtime_rejects_unsafe_confidence_policy(policy):
+    from minisense.classifier_runtime import validate_policy
+    with pytest.raises(ValueError):
+        validate_policy(policy)
+
+
+def test_runtime_never_automatically_accepts_confident_synthetic_prediction():
+    from minisense.classifier_runtime import review_decision
+    result = review_decision("Positive-Food", 0.999999, 0.5)
+    assert result["label"] is None
+    assert result["candidate_label"] == "Positive-Food"
+    assert result["review_required"] and result["abstained"]
+    assert result["confidence_threshold_met"] is True
+    assert result["production_validated"] is False

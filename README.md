@@ -7,7 +7,7 @@ survey responses and a product FAQ. Built by **Nachiket Lohar** for the
 Assessment submission is complete. The [requirements matrix](docs/requirements_matrix.md)
 maps the assignment to implementation and evidence. All three required questions
 have [recorded live results](docs/live/rag_evaluation.md), and the final local
-verification passed 61 tests with no broken dependencies. Independent checkout
+verification passed 73 tests with no broken dependencies. Independent checkout
 verification is documented in [execution evidence](docs/verification.md).
 The optional classifier passed its synthetic assessment gates; its
 [measured limitations](docs/finetuning_baseline.md) remain explicit, including
@@ -42,7 +42,9 @@ See [design](docs/design.md), [requirements](docs/requirements_matrix.md),
 [reference review](docs/reference_review.md), and [verification](docs/verification.md).
 For the assessment discussion, see [interview notes](docs/interview_notes.md).
 The [verification report](docs/verification.md#latest-classifier-assessment) records
-the latest 61-test suite, documentation polish and optional CPU training evidence.
+the classifier benchmark, documentation polish and optional CPU training evidence.
+The [shadow runtime audit](docs/finetuning/shadow_audit.json) records the latest
+inference hardening: unvalidated classifier suggestions always require human review.
 
 ## Prerequisites and installation
 
