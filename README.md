@@ -4,6 +4,15 @@ MiniSense answers business questions about 100,000 synthetic GreenLeaf Bistro
 survey responses and a product FAQ. Built by **Nachiket Lohar** for the
 **omniSense technical assessment**.
 
+Assessment submission is complete. The [requirements matrix](docs/requirements_matrix.md)
+maps the assignment to implementation and evidence. All three required questions
+have [recorded live results](docs/live/rag_evaluation.md), and the final local
+verification passed 61 tests with no broken dependencies. Independent checkout
+verification is documented in [execution evidence](docs/verification.md).
+The optional classifier passed its synthetic assessment gates; its
+[measured limitations](docs/finetuning_baseline.md) remain explicit, including
+74% Positive-Food recall and the need for real-data validation before production.
+
 The CLI has a deterministic demo path and an OpenAI-compatible
 LLM path. Demo mode uses **real sentence-transformers embeddings and dense vector
 retrieval**, not a simulated retriever. Its planner and narrative renderer are

@@ -1,5 +1,14 @@
 # Execution and review evidence
 
+## Final submission audit
+
+On 2026-10-23, the final original-workspace run of
+`.venv/Scripts/python.exe -m pytest -q` passed **61 tests in 16.49 seconds**.
+`.venv/Scripts/python.exe -m pip check` reported **No broken requirements found**.
+This finalization changes documentation only. The recorded three-question live
+evaluation and independent checkout evidence below remain the execution records;
+no additional hosted LLM requests or full classifier retraining were performed.
+
 ## Latest classifier assessment
 
 The user authorized synthetic data for this improvement. Root cause of the poor
