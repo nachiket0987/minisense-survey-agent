@@ -1,5 +1,9 @@
 pydantic>=2.10,<3
 numpy>=1.26,<3
-httpx>=0.27,<1
-sentence-transformers>=3.3,<6
+httpx[socks]>=0.27,<1
+sentence-transformers==3.4.1
+transformers==4.48.3
+tokenizers>=0.21,<0.22
+huggingface-hub>=0.20,<1
 pytest>=8,<10
+torch>=2.6,<2.7
