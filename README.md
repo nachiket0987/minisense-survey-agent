@@ -55,7 +55,7 @@ uv pip install --python .venv/Scripts/python.exe -r requirements.txt
 .\.venv\Scripts\python.exe -m minisense validate
 .\.venv\Scripts\python.exe -m minisense ingest
 .\.venv\Scripts\python.exe -m minisense ask "What are the top three customer complaints in June 2026?" --json
-.\.venv\Scripts\python.exe -m minisense evaluate
+.\.venv\Scripts\python.exe -m minisense evaluate --output .cache/demo/evaluation.json
 .\.venv\Scripts\python.exe -m pytest -q
 .\.venv\Scripts\python.exe -m pip check
 ```
@@ -150,6 +150,11 @@ HTTP diagnostics omit response bodies and authentication headers. A 429 with a
 numeric Retry-After of at most 60 seconds gets at most two retries; other quota
 failures stop. Evaluation saves each question, including safe partial failures,
 before continuing. Real model exchanges and Python executions are distinct fields.
+
+For fresh-checkout verification, write repeated live runs to an ignored location:
+`python -m minisense --provider llm evaluate --output .cache/live/evaluation.json`.
+This preserves committed live examples. The installation example similarly keeps
+repeated demo results under `.cache/demo`.
 
 ## Fine tuning design
 
