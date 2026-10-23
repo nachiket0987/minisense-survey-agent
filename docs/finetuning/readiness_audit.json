@@ -1,0 +1,307 @@
+{
+  "production_validated": false,
+  "deployment_ready": false,
+  "provenance": "Assistant-authored synthetic challenge cases and labels; no independent human review",
+  "scope": "Small diagnostic sample; not representative real data, a load test, or a production acceptance gate",
+  "checkpoint_sha256": "0dda191545333934f3bc220ab5a97c29552dce8f694497de9e62efdf9438783d",
+  "python": "3.12.11",
+  "platform": "Windows-11-10.0.26220-SP0",
+  "in_scope_count": 16,
+  "in_scope_correct": 13,
+  "in_scope_accepted_errors": 3,
+  "out_of_scope_or_ambiguous_count": 6,
+  "out_of_scope_or_ambiguous_abstained": 0,
+  "latency": {
+    "measurement": "Sequential predict calls, each reloads model/tokenizer; first includes imports. Not service latency.",
+    "median_seconds": 0.05815674999030307,
+    "maximum_seconds": 6.035400000051595
+  },
+  "cases": [
+    {
+      "text": "The mushroom risotto was exquisite.",
+      "expected": "Positive-Food",
+      "prediction": {
+        "label": "Positive-Food",
+        "candidate_label": "Positive-Food",
+        "confidence": 0.9999878406524658,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 6.035400000051595
+    },
+    {
+      "text": "I'd come back just for that delicious soup.",
+      "expected": "Positive-Food",
+      "prediction": {
+        "label": "Positive-Food",
+        "candidate_label": "Positive-Food",
+        "confidence": 0.9999513626098633,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05948539997916669
+    },
+    {
+      "text": "My chicken arrived raw in the middle.",
+      "expected": "Negative-Food",
+      "prediction": {
+        "label": "Negative-Food",
+        "candidate_label": "Negative-Food",
+        "confidence": 0.949123740196228,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05772889999207109
+    },
+    {
+      "text": "The noodles tasted of burnt oil.",
+      "expected": "Negative-Food",
+      "prediction": {
+        "label": "Negative-Food",
+        "candidate_label": "Negative-Food",
+        "confidence": 0.9999604225158691,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05415489990264177
+    },
+    {
+      "text": "Forty minutes passed before anyone brought our drinks.",
+      "expected": "Negative-Wait",
+      "prediction": {
+        "label": "Negative-Wait",
+        "candidate_label": "Negative-Wait",
+        "confidence": 0.9988322854042053,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05781679996289313
+    },
+    {
+      "text": "We stood in line so long we nearly left.",
+      "expected": "Negative-Wait",
+      "prediction": {
+        "label": "Negative-Wait",
+        "candidate_label": "Negative-Wait",
+        "confidence": 0.999991774559021,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05719690001569688
+    },
+    {
+      "text": "Our server patiently explained every ingredient.",
+      "expected": "Positive-Staff",
+      "prediction": {
+        "label": "Positive-Food",
+        "candidate_label": "Positive-Food",
+        "confidence": 0.9997450709342957,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05322480003815144
+    },
+    {
+      "text": "The cashier made us feel welcome.",
+      "expected": "Positive-Staff",
+      "prediction": {
+        "label": "Positive-Staff",
+        "candidate_label": "Positive-Staff",
+        "confidence": 0.9999911785125732,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05870669998694211
+    },
+    {
+      "text": "The waiter mocked my question.",
+      "expected": "Negative-Staff",
+      "prediction": {
+        "label": "Negative-Staff",
+        "candidate_label": "Negative-Staff",
+        "confidence": 0.9977982044219971,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.06396370008587837
+    },
+    {
+      "text": "The cashier was rude when I asked for help.",
+      "expected": "Negative-Staff",
+      "prediction": {
+        "label": "Negative-Staff",
+        "candidate_label": "Negative-Staff",
+        "confidence": 0.9999899864196777,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.06024480005726218
+    },
+    {
+      "text": "I ordered a salad but received a burger.",
+      "expected": "Negative-Order",
+      "prediction": {
+        "label": "Neutral-Other",
+        "candidate_label": "Neutral-Other",
+        "confidence": 0.9188187122344971,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05805919994600117
+    },
+    {
+      "text": "The takeaway bag was missing my dessert.",
+      "expected": "Negative-Order",
+      "prediction": {
+        "label": "Negative-Order",
+        "candidate_label": "Negative-Order",
+        "confidence": 0.9999880790710449,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05825430003460497
+    },
+    {
+      "text": "Twenty dollars for that tiny portion is a rip-off.",
+      "expected": "Negative-Value",
+      "prediction": {
+        "label": "Negative-Value",
+        "candidate_label": "Negative-Value",
+        "confidence": 0.9999926090240479,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.060022199992090464
+    },
+    {
+      "text": "The bill was far too high for what we got.",
+      "expected": "Negative-Value",
+      "prediction": {
+        "label": "Negative-Value",
+        "candidate_label": "Negative-Value",
+        "confidence": 0.9999929666519165,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.0701958000427112
+    },
+    {
+      "text": "We visited on Tuesday at noon.",
+      "expected": "Neutral-Other",
+      "prediction": {
+        "label": "Neutral-Other",
+        "candidate_label": "Neutral-Other",
+        "confidence": 0.9999854564666748,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05968669999856502
+    },
+    {
+      "text": "There were four people in our party.",
+      "expected": "Neutral-Other",
+      "prediction": {
+        "label": "Positive-Staff",
+        "candidate_label": "Positive-Staff",
+        "confidence": 0.8742528557777405,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05562090000603348
+    },
+    {
+      "text": "The parking garage charged too much.",
+      "expected": null,
+      "prediction": {
+        "label": "Negative-Value",
+        "candidate_label": "Negative-Value",
+        "confidence": 0.9999802112579346,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05913629999849945
+    },
+    {
+      "text": "The restroom was filthy.",
+      "expected": null,
+      "prediction": {
+        "label": "Negative-Food",
+        "candidate_label": "Negative-Food",
+        "confidence": 0.9999657869338989,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05491750000510365
+    },
+    {
+      "text": "My hotel room had bedbugs.",
+      "expected": null,
+      "prediction": {
+        "label": "Negative-Food",
+        "candidate_label": "Negative-Food",
+        "confidence": 0.9999891519546509,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05665219994261861
+    },
+    {
+      "text": "asdf qwer zxcv 12345",
+      "expected": null,
+      "prediction": {
+        "label": "Negative-Order",
+        "candidate_label": "Negative-Order",
+        "confidence": 0.9909613728523254,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.06233440001960844
+    },
+    {
+      "text": "The food was excellent but the waiter insulted us and half the order was missing.",
+      "expected": null,
+      "prediction": {
+        "label": "Negative-Order",
+        "candidate_label": "Negative-Order",
+        "confidence": 0.9999822378158569,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05760729999747127
+    },
+    {
+      "text": "La comida estaba deliciosa.",
+      "expected": null,
+      "prediction": {
+        "label": "Positive-Staff",
+        "candidate_label": "Positive-Staff",
+        "confidence": 0.9998306035995483,
+        "abstained": false,
+        "review_required": false,
+        "production_validated": false
+      },
+      "cli_style_seconds": 0.05745039996691048
+    }
+  ]
+}

@@ -1,5 +1,16 @@
 # Execution and review evidence
 
+## Production-readiness challenge audit
+
+On 2026-10-23 the offline frozen-checkpoint
+`docs/finetuning/run_readiness_audit.py` executed successfully: 13/16 in-scope
+examples correct, three accepted errors, and zero abstentions on six
+out-of-scope or ambiguous probes. Full cases, predictions, timings and checkpoint
+SHA256 are in [readiness_audit.json](finetuning/readiness_audit.json).
+These are assistant-authored synthetic diagnostics. Production validation remains
+incomplete, and the model is unsuitable for automatic production decisions on
+this evidence. No API calls, retraining or deployment were performed.
+
 ## Final submission audit
 
 On 2026-10-23, the final original-workspace run of

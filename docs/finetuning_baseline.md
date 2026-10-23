@@ -97,6 +97,33 @@ was only 0.03571. That historical result is preserved rather than overwritten.
 
 ## Deployment boundary
 
+### Additional readiness audit (2026-10-23)
+
+An offline frozen-checkpoint challenge audit correctly classified **13/16** new
+in-scope examples (81.25%). All three incorrect predictions were accepted.
+None of six out-of-scope, multilingual or ambiguous probes triggered abstention.
+These assistant-authored cases are diagnostic synthetic examples, not independent
+human annotations or representative customer data. They provide additional
+evidence against production readiness; they do not replace the held-out benchmark.
+No retraining or threshold tuning used these results.
+
+Sequential local calls had median latency **0.0582 seconds** and maximum
+**6.0354 seconds**, with model/tokenizer reloading per call and initial imports
+included. This is not a serving throughput or concurrent-load measurement.
+See the [full results](finetuning/readiness_audit.json) and
+[reproduction script](finetuning/run_readiness_audit.py). Run the script from the
+repository root using the existing environment and local checkpoint:
+
+```powershell
+.\.venv\Scripts\python.exe docs/finetuning/run_readiness_audit.py
+```
+
+Production validation cannot be completed with the available synthetic-only
+data. The next required input is representative real feedback with independent
+human-reviewed eight-label annotations and privacy/usage authorization. Its
+untouched test set must assess every class, ambiguous/unsupported topics and
+confidence failures before operational shadow testing and deployment approval.
+
 The improved checkpoint is local at `.cache/classifier-assessment`. It is not
 automatically enabled in the survey agent or published as model weights.
 `assessment_ready` reports synthetic gate status; `deployment_ready` and
