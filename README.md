@@ -64,6 +64,11 @@ Both tested pip versions (25.0.1 and 26.2.2) encountered Windows `WinError 5`
 while replacing SymPy RECORD metadata; uv completed the sequential installation.
 Do not run competing installers in one environment. The installed dependency
 snapshot is in [windows_environment.txt](docs/windows_environment.txt).
+If Windows venv creation reports an ensurepip failure, verify the created
+interpreter with `.\.venv\Scripts\python.exe -m ensurepip --upgrade --default-pip`,
+then `.\.venv\Scripts\python.exe -m pip --version` before continuing. This recovery
+succeeded during the clean-checkout verification; persistent failures should be
+investigated rather than ignored.
 
 Linux/macOS: create the environment with `python3 -m venv .venv`, then replace the
 Windows executable above with `.venv/bin/python`. On Linux the tested CPU wheel
@@ -238,20 +243,16 @@ https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct (fine-tuning proposal only).
 MiniSense's original source is MIT licensed. Dependencies and downloaded model
 weights retain their upstream licenses. No public contact email is configured.
 
-## Importing the delivered Git history
+## Repository and reproduction
 
-If this project was delivered as an archive rather than a remote repository,
-`minisense-history.bundle` preserves incremental commits. From the extracted
-archive's parent directory:
+The published repository preserves the existing incremental implementation history:
 
 ```powershell
-git clone .\minisense-history.bundle minisense-from-history
-cd minisense-from-history
-git branch -m main
-# After creating an empty repo in your GitHub account:
-git remote add origin https://github.com/psychochan/minisense-survey-agent.git
-git push -u origin main
+git clone https://github.com/nachiket0987/minisense-survey-agent.git
+cd minisense-survey-agent
 ```
 
-Use an empty repository and do not force-push. The extracted source folder can
-also be opened directly in VS Code; the bundle is only needed to recover history.
+Follow installation and LLM configuration above. The default branch is
+`implementation`; generated data, vector indexes and environments must be built
+locally. The archive's parent-directory Git bundle remains available for recovering
+the original handoff history, but is not required for a GitHub checkout.

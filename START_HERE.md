@@ -2,7 +2,8 @@
 
 Open this folder in VS Code: the one containing this file, README.md, minisense,
 tests and requirements.txt. The archive includes a local Git repository with the
-implementation history. No remote repository is configured. Do not initialize a
+implementation history. The continuation is now published at
+https://github.com/nachiket0987/minisense-survey-agent on `implementation`. Do not initialize a
 second repository or copy files over an existing project.
 
 Open the Codex extension in this folder and paste:

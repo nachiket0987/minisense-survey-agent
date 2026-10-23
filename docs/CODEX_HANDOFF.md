@@ -1,5 +1,12 @@
 # MiniSense continuation brief
 
+Continuation status: Windows setup, real Groq integration, 47-test suite and all
+three live questions (58 checks) are verified. See verification.md and live/ for
+current evidence. User changed the published repository to
+https://github.com/nachiket0987/minisense-survey-agent (`implementation`). The
+original snapshot below is preserved for provenance; its missing-provider and
+missing-remote statements describe the handoff, not current status.
+
 ## Mission and authorization
 
 Act as the implementing engineer and reviewer. Finish the existing omniSense
