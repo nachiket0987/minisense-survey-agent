@@ -169,3 +169,23 @@ def test_top_three_question_rejects_single_complaint_plan(tmp_path):
     app.provider = TooFew()
     with pytest.raises(ValueError, match="failed checks"):
         evaluate(app, tmp_path / "evaluation.json")
+
+
+def test_csat_theme_projection_keeps_all_response_ratings(tmp_path):
+    from minisense.agents import demo_plan
+
+    class SatisfactionProjection:
+        def plan(self, question, latest):
+            plan = demo_plan(question, latest)
+            if "current customer satisfaction" in question:
+                next(t for t in plan.tasks if t.agent == "data").theme = "satisfaction"
+            return plan
+
+    app = Orchestrator(SurveyStore(generate(100)), FixtureIndex())
+    app.provider = SatisfactionProjection()
+    output = tmp_path / "evaluation.json"
+    assert evaluate(app, output)["questions"] == 3
+    record = json.loads(output.read_text())["results"][2]
+    assert record["correctness_checks"]["data_0_count"]
+    assert record["correctness_checks"]["data_0_mean"]
+    assert record["correctness_checks"]["target_trigger"]

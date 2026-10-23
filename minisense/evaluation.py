@@ -23,7 +23,9 @@ def check_answer(app, answer, number):
         and invoked["summary"] == 1 and invoked["rag"] >= 1
         and invoked == Counter(t.agent for t in answer.plan.tasks),
         "expected_theme": bool(data) and all(
-            t.theme in (None, "wait_time") if number == 1 else t.theme is None for t in data),
+            t.theme in (None, "wait_time") if number == 1 else
+            t.theme in (None, "satisfaction") if number == 2 else t.theme is None
+            for t in data),
     }
     # Revalidate mutable models and verify dependencies, rather than task-list order.
     Plan.model_validate(answer.plan.model_dump())
