@@ -1,0 +1,16 @@
+{"text":"The Garden Bowl tasted fresh and delicious.","label":"Positive-Food","group":"train-food-positive-a"}
+{"text":"I loved the flavour of the avocado toast.","label":"Positive-Food","group":"train-food-positive-b"}
+{"text":"My meal arrived cold and tasted stale.","label":"Negative-Food","group":"train-food-negative-a"}
+{"text":"The toast was burnt and unpleasant to eat.","label":"Negative-Food","group":"train-food-negative-b"}
+{"text":"The queue moved slowly and I waited too long.","label":"Negative-Wait","group":"train-wait-a"}
+{"text":"Preparing my simple order took far too much time.","label":"Negative-Wait","group":"train-wait-b"}
+{"text":"The staff were friendly and explained the menu clearly.","label":"Positive-Staff","group":"train-staff-positive-a"}
+{"text":"Our server was helpful and very welcoming.","label":"Positive-Staff","group":"train-staff-positive-b"}
+{"text":"The cashier was rude when I asked a question.","label":"Negative-Staff","group":"train-staff-negative-a"}
+{"text":"The team ignored me and seemed dismissive.","label":"Negative-Staff","group":"train-staff-negative-b"}
+{"text":"My takeaway bag was missing the coffee I ordered.","label":"Negative-Order","group":"train-order-a"}
+{"text":"I received a different bowl from the one on my receipt.","label":"Negative-Order","group":"train-order-b"}
+{"text":"The small portion was too expensive for what I received.","label":"Negative-Value","group":"train-value-a"}
+{"text":"The meal did not feel worth the high price.","label":"Negative-Value","group":"train-value-b"}
+{"text":"I visited the bistro and collected my order.","label":"Neutral-Other","group":"train-neutral-a"}
+{"text":"The visit was ordinary with nothing particular to report.","label":"Neutral-Other","group":"train-neutral-b"}

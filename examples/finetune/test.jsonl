@@ -1,0 +1,8 @@
+{"text":"My breakfast tasted wonderful.","label":"Positive-Food","group":"test-food-positive"}
+{"text":"The coffee had a terrible burnt taste.","label":"Negative-Food","group":"test-food-negative"}
+{"text":"Service was delayed and my lunch break ended before my food arrived.","label":"Negative-Wait","group":"test-wait"}
+{"text":"Everyone behind the counter treated us kindly.","label":"Positive-Staff","group":"test-staff-positive"}
+{"text":"The server brushed off my request for help.","label":"Negative-Staff","group":"test-staff-negative"}
+{"text":"They handed me somebody else's takeaway order.","label":"Negative-Order","group":"test-order"}
+{"text":"I paid a lot and received very little food.","label":"Negative-Value","group":"test-value"}
+{"text":"I ordered lunch at this location yesterday.","label":"Neutral-Other","group":"test-neutral"}

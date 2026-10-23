@@ -1,0 +1,8 @@
+{"text":"The salad ingredients were crisp and tasty.","label":"Positive-Food","group":"validation-food-positive"}
+{"text":"The soup tasted spoiled.","label":"Negative-Food","group":"validation-food-negative"}
+{"text":"I spent ages waiting at the counter.","label":"Negative-Wait","group":"validation-wait"}
+{"text":"The manager patiently helped me choose lunch.","label":"Positive-Staff","group":"validation-staff-positive"}
+{"text":"The employee spoke to me disrespectfully.","label":"Negative-Staff","group":"validation-staff-negative"}
+{"text":"The kitchen forgot the side dish I paid for.","label":"Negative-Order","group":"validation-order"}
+{"text":"Such a tiny bowl should cost much less.","label":"Negative-Value","group":"validation-value"}
+{"text":"I stopped there on my way home.","label":"Neutral-Other","group":"validation-neutral"}
