@@ -7,7 +7,7 @@ No live LLM success or training run is implied by a unit test.
 
 Windows continuation: live/evaluation.json passed all three required Groq questions
 and 58 independent checks; live/probes.json records passing paraphrase, exact-date
-and empty-business checks. The complete Windows suite passed 61 tests including
+and empty-business checks. The complete Windows suite passed 75 tests including
 real embeddings and CPU encoder fine-tuning. Historical demo evidence is preserved. The trained synthetic classifier is not production validation on real feedback.
 Publication target is now nachiket0987/minisense-survey-agent, explicitly authorized
 by the user instead of the handoff's original owner.
@@ -44,7 +44,7 @@ by the user instead of the handoff's original owner.
 | Reference implementation audit | Five snapshot reviews, real implementation files | reference_review.md | clone SHAs and inspected modules | Complete |
 | Personalization and attribution | Nachiket maintainer, no copied configuration or source | README, pyproject.toml, LICENSE | identity and secret scan | Complete |
 | GitHub repository and incremental commits | Local implementation branch with staged commits | Git history; public GitHub repository | published branch and independent checkout | Published; full history preserved |
-| Windows VS Code reproduction | PowerShell commands without activation requirement | README.md | 61 tests in original and independent published checkout; exact synthetic split hash reproduction; previous live evaluation | Windows verified; clean-checkout evidence in verification.md |
+| Windows VS Code reproduction | PowerShell commands without activation requirement | README.md | Current 75-test suite; exact synthetic split hash reproduction; previous live evaluation | Windows verified; clean-checkout evidence in verification.md |
 
 ## Assumptions
 

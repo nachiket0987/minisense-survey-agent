@@ -142,6 +142,8 @@ def test_runtime_rejects_invalid_input_before_loading_model(text):
     {"temperature": 1, "threshold": -1},
     {"temperature": 1, "threshold": float("inf")},
     {"temperature": True, "threshold": 0.5},
+    {"temperature": 1e-320, "threshold": 0.5},
+    {"temperature": 1e9, "threshold": 0.5},
 ])
 def test_runtime_rejects_unsafe_confidence_policy(policy):
     from minisense.classifier_runtime import validate_policy

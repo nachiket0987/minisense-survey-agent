@@ -7,7 +7,7 @@ survey responses and a product FAQ. Built by **Nachiket Lohar** for the
 Assessment submission is complete. The [requirements matrix](docs/requirements_matrix.md)
 maps the assignment to implementation and evidence. All three required questions
 have [recorded live results](docs/live/rag_evaluation.md), and the final local
-verification passed 73 tests with no broken dependencies. Independent checkout
+verification passed 75 tests with no broken dependencies. Independent checkout
 verification is documented in [execution evidence](docs/verification.md).
 The optional classifier passed its synthetic assessment gates; its
 [measured limitations](docs/finetuning_baseline.md) remain explicit, including
@@ -229,7 +229,8 @@ rewriting the training pipeline.
 
 The CPU classifier is trained on a reproducible synthetic benchmark with separate
 template families for training, validation, calibration and testing. It selects
-the best checkpoint using validation only and can abstain on uncertain predictions.
+the best checkpoint using validation only. Inference now runs in shadow mode:
+every candidate requires human review, regardless of confidence.
 Test accuracy **0.9675**, macro-F1 **0.9669**, minimum negative-class recall **1.0000**. Accepted-prediction coverage **1.0000**, accepted accuracy **0.9675**.
 The fixed synthetic assessment gates passed; this is not validation on real
 customer feedback. See [training/reproduction details](docs/finetuning_baseline.md)

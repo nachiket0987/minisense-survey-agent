@@ -13,7 +13,7 @@ def validate_text(text):
 def validate_policy(policy):
     if not isinstance(policy, dict):
         raise ValueError("Confidence policy must be an object")
-    for name, lower, upper in (("temperature", 0, float("inf")), ("threshold", 0, 1.01)):
+    for name, lower, upper in (("temperature", 0.01, 100), ("threshold", 0, 1.01)):
         value = policy.get(name)
         if type(value) not in (int, float) or not math.isfinite(value):
             raise ValueError(f"Invalid confidence {name}")
@@ -67,5 +67,8 @@ class ClassifierRuntime:
             logits = self.model(**encoded).logits
             if not torch.isfinite(logits).all():
                 raise ValueError("Classifier returned nonfinite logits; send for human review")
-            confidence, candidate = torch.softmax(logits / self.policy["temperature"], dim=-1).max(dim=-1)
+            probabilities = torch.softmax(logits / self.policy["temperature"], dim=-1)
+            if not torch.isfinite(probabilities).all():
+                raise ValueError("Classifier returned nonfinite probabilities; send for human review")
+            confidence, candidate = probabilities.max(dim=-1)
         return review_decision(LABELS[candidate.item()], confidence.item(), self.policy["threshold"])
