@@ -1,0 +1,781 @@
+{
+  "mode": "demo",
+  "embedding": "actual sentence-transformers embeddings; no keyword replacement",
+  "results": [
+    {
+      "plan": {
+        "question": "What are the top three customer complaints in June 2026?",
+        "tasks": [
+          {
+            "id": "data_0",
+            "agent": "data",
+            "operation": "metrics",
+            "depends_on": [],
+            "period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "business_id": "b01",
+            "theme": null,
+            "top_n": 3,
+            "query": null
+          },
+          {
+            "id": "rag",
+            "agent": "rag",
+            "operation": "retrieve",
+            "depends_on": [],
+            "period": null,
+            "business_id": "b01",
+            "theme": null,
+            "top_n": 3,
+            "query": "customer complaint escalation refunds quality issues"
+          },
+          {
+            "id": "summary",
+            "agent": "summary",
+            "operation": "synthesize",
+            "depends_on": [
+              "data_0",
+              "rag"
+            ],
+            "period": null,
+            "business_id": "b01",
+            "theme": null,
+            "top_n": 3,
+            "query": null
+          }
+        ]
+      },
+      "agents_invoked": [
+        "data",
+        "rag",
+        "summary"
+      ],
+      "tool_calls": [
+        {
+          "agent": "data",
+          "name": "compute_metrics",
+          "arguments": {
+            "period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "business_id": "b01",
+            "theme": null,
+            "top_n": 3
+          },
+          "result": {
+            "period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "business_id": "b01",
+            "count": 53000,
+            "mean_rating": 3.3624150943396227,
+            "satisfied_pct": 45.820754716981135,
+            "themes": {
+              "food_quality": 11419,
+              "wait_time": 15692,
+              "staff_service": 8077,
+              "order_accuracy": 6861,
+              "cleanliness": 4912,
+              "value": 8161,
+              "satisfaction": 5898
+            },
+            "complaints": {
+              "food_quality": 4713,
+              "wait_time": 6878,
+              "staff_service": 3226,
+              "order_accuracy": 2643,
+              "cleanliness": 1726,
+              "value": 3292,
+              "satisfaction": 2137
+            },
+            "complaint_rates": {
+              "food_quality": 8.89245283018868,
+              "wait_time": 12.977358490566038,
+              "staff_service": 6.086792452830188,
+              "order_accuracy": 4.986792452830189,
+              "cleanliness": 3.2566037735849056,
+              "value": 6.211320754716981,
+              "satisfaction": 4.032075471698113
+            },
+            "top_complaints": [
+              [
+                "wait_time",
+                6878
+              ],
+              [
+                "food_quality",
+                4713
+              ],
+              [
+                "value",
+                3292
+              ]
+            ]
+          }
+        },
+        {
+          "agent": "data",
+          "name": "compute_csat",
+          "arguments": {
+            "rating_count": 53000,
+            "period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "business_id": "b01"
+          },
+          "result": {
+            "mean": 3.3624150943396227,
+            "satisfied_pct": 45.820754716981135
+          }
+        }
+      ],
+      "results": {
+        "data_0": {
+          "period": {
+            "start": "2026-06-01",
+            "end": "2026-06-30"
+          },
+          "business_id": "b01",
+          "count": 53000,
+          "mean_rating": 3.3624150943396227,
+          "satisfied_pct": 45.820754716981135,
+          "themes": {
+            "food_quality": 11419,
+            "wait_time": 15692,
+            "staff_service": 8077,
+            "order_accuracy": 6861,
+            "cleanliness": 4912,
+            "value": 8161,
+            "satisfaction": 5898
+          },
+          "complaints": {
+            "food_quality": 4713,
+            "wait_time": 6878,
+            "staff_service": 3226,
+            "order_accuracy": 2643,
+            "cleanliness": 1726,
+            "value": 3292,
+            "satisfaction": 2137
+          },
+          "complaint_rates": {
+            "food_quality": 8.89245283018868,
+            "wait_time": 12.977358490566038,
+            "staff_service": 6.086792452830188,
+            "order_accuracy": 4.986792452830189,
+            "cleanliness": 3.2566037735849056,
+            "value": 6.211320754716981,
+            "satisfaction": 4.032075471698113
+          },
+          "top_complaints": [
+            [
+              "wait_time",
+              6878
+            ],
+            [
+              "food_quality",
+              4713
+            ],
+            [
+              "value",
+              3292
+            ]
+          ]
+        },
+        "rag": {
+          "query": "customer complaint escalation refunds quality issues",
+          "chunks": [
+            {
+              "id": "faq-03",
+              "source": "faq.txt",
+              "content": "Q: How do you handle complaints?\nA: All complaints are escalated to the shift manager within 15 minutes. Refunds or replacements are offered for quality issues. The manager records the issue, checks the affected order, and explains the resolution. Customers should keep their receipt where possible so the team can locate the transaction. Escalation time and food preparation time are separate measures and should never be combined in reporting.",
+              "score": 0.6094598770141602
+            },
+            {
+              "id": "faq-05",
+              "source": "faq.txt",
+              "content": "Q: How are order accuracy and food quality checked?\nA: Staff check the item, requested substitutions, and packaging before handing over an order. Quality concerns should be recorded by menu item and shift. Repeated reports should prompt a check of preparation and handover steps. A complaint is evidence of a customer's reported experience; it does not establish the cause without further investigation.",
+              "score": 0.40834128856658936
+            },
+            {
+              "id": "faq-07",
+              "source": "faq.txt",
+              "content": "Q: How should management interpret survey trends and value feedback?\nA: Surveys are collected through mobile, web, and in-store channels. Participation is voluntary, so results may not represent all diners. Compare complaint proportions as well as counts when monthly survey volumes differ. Value feedback should inform a review of portion descriptions, menu clarity, and customer expectations. Proposed staffing or pricing changes require operational validation; this FAQ does not authorize automatic changes or guarantee that any intervention will improve scores.",
+              "score": 0.3071940243244171
+            }
+          ],
+          "limitation": null
+        }
+      },
+      "summary": {
+        "answer": "In June 2026, b01 had 53,000 responses, a mean satisfaction rating of 3.36/5, and 45.82% rating four or five. The leading complaint themes were wait time (6,878; 12.98% of responses), food quality (4,713; 8.89% of responses), value (3,292; 6.21% of responses) [survey:data_0]. FAQ [faq.txt#faq-03]: All complaints are escalated to the shift manager within 15 minutes. Refunds or replacements are offered for quality issues. The manager records the issue, checks the affected order, and explains the resolution. Customers should keep their receipt where possible so the team can locate the transaction. Escalation time and food preparation time are separate measures and should never be combined in reporting. Recommendation: investigate the leading reported themes and validate causes operationally before changing staffing or pricing.",
+        "evidence": [
+          "In June 2026, b01 had 53,000 responses, a mean satisfaction rating of 3.36/5, and 45.82% rating four or five.",
+          "The leading complaint themes were wait time (6,878; 12.98% of responses), food quality (4,713; 8.89% of responses), value (3,292; 6.21% of responses) [survey:data_0].",
+          "FAQ [faq.txt#faq-03]: All complaints are escalated to the shift manager within 15 minutes. Refunds or replacements are offered for quality issues. The manager records the issue, checks the affected order, and explains the resolution. Customers should keep their receipt where possible so the team can locate the transaction. Escalation time and food preparation time are separate measures and should never be combined in reporting."
+        ],
+        "recommendation": "Recommendation: investigate the leading reported themes and validate causes operationally before changing staffing or pricing.",
+        "mode": "demo"
+      },
+      "correctness_checks": {
+        "expected_scope": true,
+        "expected_routing": true,
+        "expected_theme": true,
+        "data_0_count": true,
+        "data_0_mean": true,
+        "data_0_complaints": true,
+        "has_retrieved_context": true,
+        "source_attribution": true
+      },
+      "retrieval_observation": "Dense retrieval returned policy context; cosine similarity is heuristic. FAQ text explains policy, not causes or measured wait durations. See checks for target section presence."
+    },
+    {
+      "plan": {
+        "question": "How did wait-time complaints change from May to June 2026, and what does the FAQ say about expected wait times?",
+        "tasks": [
+          {
+            "id": "data_0",
+            "agent": "data",
+            "operation": "metrics",
+            "depends_on": [],
+            "period": {
+              "start": "2026-05-01",
+              "end": "2026-05-31"
+            },
+            "business_id": "b01",
+            "theme": "wait_time",
+            "top_n": 3,
+            "query": null
+          },
+          {
+            "id": "data_1",
+            "agent": "data",
+            "operation": "metrics",
+            "depends_on": [],
+            "period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "business_id": "b01",
+            "theme": "wait_time",
+            "top_n": 3,
+            "query": null
+          },
+          {
+            "id": "comparison",
+            "agent": "comparison",
+            "operation": "compare",
+            "depends_on": [
+              "data_0",
+              "data_1"
+            ],
+            "period": null,
+            "business_id": "b01",
+            "theme": null,
+            "top_n": 3,
+            "query": null
+          },
+          {
+            "id": "rag",
+            "agent": "rag",
+            "operation": "retrieve",
+            "depends_on": [],
+            "period": null,
+            "business_id": "b01",
+            "theme": null,
+            "top_n": 3,
+            "query": "expected wait times peak off peak hours"
+          },
+          {
+            "id": "summary",
+            "agent": "summary",
+            "operation": "synthesize",
+            "depends_on": [
+              "data_0",
+              "data_1",
+              "comparison",
+              "rag"
+            ],
+            "period": null,
+            "business_id": "b01",
+            "theme": null,
+            "top_n": 3,
+            "query": null
+          }
+        ]
+      },
+      "agents_invoked": [
+        "data",
+        "data",
+        "rag",
+        "comparison",
+        "summary"
+      ],
+      "tool_calls": [
+        {
+          "agent": "data",
+          "name": "compute_metrics",
+          "arguments": {
+            "period": {
+              "start": "2026-05-01",
+              "end": "2026-05-31"
+            },
+            "business_id": "b01",
+            "theme": "wait_time",
+            "top_n": 3
+          },
+          "result": {
+            "period": {
+              "start": "2026-05-01",
+              "end": "2026-05-31"
+            },
+            "business_id": "b01",
+            "count": 47000,
+            "mean_rating": 3.642659574468085,
+            "satisfied_pct": 56.39787234042553,
+            "themes": {
+              "wait_time": 9405
+            },
+            "complaints": {
+              "wait_time": 3056
+            },
+            "complaint_rates": {
+              "wait_time": 6.502127659574468
+            },
+            "top_complaints": [
+              [
+                "wait_time",
+                3056
+              ]
+            ]
+          }
+        },
+        {
+          "agent": "data",
+          "name": "compute_csat",
+          "arguments": {
+            "rating_count": 47000,
+            "period": {
+              "start": "2026-05-01",
+              "end": "2026-05-31"
+            },
+            "business_id": "b01"
+          },
+          "result": {
+            "mean": 3.642659574468085,
+            "satisfied_pct": 56.39787234042553
+          }
+        },
+        {
+          "agent": "data",
+          "name": "compute_metrics",
+          "arguments": {
+            "period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "business_id": "b01",
+            "theme": "wait_time",
+            "top_n": 3
+          },
+          "result": {
+            "period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "business_id": "b01",
+            "count": 53000,
+            "mean_rating": 3.3624150943396227,
+            "satisfied_pct": 45.820754716981135,
+            "themes": {
+              "wait_time": 15692
+            },
+            "complaints": {
+              "wait_time": 6878
+            },
+            "complaint_rates": {
+              "wait_time": 12.977358490566038
+            },
+            "top_complaints": [
+              [
+                "wait_time",
+                6878
+              ]
+            ]
+          }
+        },
+        {
+          "agent": "data",
+          "name": "compute_csat",
+          "arguments": {
+            "rating_count": 53000,
+            "period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "business_id": "b01"
+          },
+          "result": {
+            "mean": 3.3624150943396227,
+            "satisfied_pct": 45.820754716981135
+          }
+        }
+      ],
+      "results": {
+        "data_0": {
+          "period": {
+            "start": "2026-05-01",
+            "end": "2026-05-31"
+          },
+          "business_id": "b01",
+          "count": 47000,
+          "mean_rating": 3.642659574468085,
+          "satisfied_pct": 56.39787234042553,
+          "themes": {
+            "wait_time": 9405
+          },
+          "complaints": {
+            "wait_time": 3056
+          },
+          "complaint_rates": {
+            "wait_time": 6.502127659574468
+          },
+          "top_complaints": [
+            [
+              "wait_time",
+              3056
+            ]
+          ]
+        },
+        "data_1": {
+          "period": {
+            "start": "2026-06-01",
+            "end": "2026-06-30"
+          },
+          "business_id": "b01",
+          "count": 53000,
+          "mean_rating": 3.3624150943396227,
+          "satisfied_pct": 45.820754716981135,
+          "themes": {
+            "wait_time": 15692
+          },
+          "complaints": {
+            "wait_time": 6878
+          },
+          "complaint_rates": {
+            "wait_time": 12.977358490566038
+          },
+          "top_complaints": [
+            [
+              "wait_time",
+              6878
+            ]
+          ]
+        },
+        "rag": {
+          "query": "expected wait times peak off peak hours",
+          "chunks": [
+            {
+              "id": "faq-02",
+              "source": "faq.txt",
+              "content": "Q: What is your average wait time?\nA: We target under 10 minutes for counter orders during off-peak hours. Peak hours (12–1 PM, 6–8 PM) may see 15–20 minute waits. These are operational targets and typical ranges, not measurements of every customer's actual wait. Staff should communicate expected delays at ordering and update customers when preparation takes longer. Survey complaints alone cannot establish the actual number of minutes waited or prove that a target was breached.",
+              "score": 0.6595118045806885
+            }
+          ],
+          "limitation": null
+        },
+        "comparison": {
+          "earlier": {
+            "start": "2026-05-01",
+            "end": "2026-05-31"
+          },
+          "later": {
+            "start": "2026-06-01",
+            "end": "2026-06-30"
+          },
+          "count_delta": 6000,
+          "count_change_pct": 12.76595744680851,
+          "mean_delta": -0.2802444801284625,
+          "complaints": {
+            "wait_time": {
+              "count_delta": 3822,
+              "change_pct": 125.06544502617801,
+              "rate_delta_pp": 6.4752308309915705
+            }
+          },
+          "warnings": []
+        }
+      },
+      "summary": {
+        "answer": "In May 2026, b01 had 47,000 responses, a mean satisfaction rating of 3.64/5, and 56.40% rating four or five. The leading complaint themes were wait time (3,056; 6.50% of responses) [survey:data_0]. In June 2026, b01 had 53,000 responses, a mean satisfaction rating of 3.36/5, and 45.82% rating four or five. The leading complaint themes were wait time (6,878; 12.98% of responses) [survey:data_1]. Between the compared periods, response volume changed by +6,000 (+12.77%), and mean rating changed by -0.28 points [comparison:comparison]. From May 2026 to June 2026, wait time complaints changed by +3,822 (+125.07%); prevalence changed by +6.48 percentage points [comparison:comparison]. FAQ [faq.txt#faq-02]: We target under 10 minutes for counter orders during off-peak hours. Peak hours (12–1 PM, 6–8 PM) may see 15–20 minute waits. These are operational targets and typical ranges, not measurements of every customer's actual wait. Staff should communicate expected delays at ordering and update customers when preparation takes longer. Survey complaints alone cannot establish the actual number of minutes waited or prove that a target was breached. Recommendation: investigate the leading reported themes and validate causes operationally before changing staffing or pricing.",
+        "evidence": [
+          "In May 2026, b01 had 47,000 responses, a mean satisfaction rating of 3.64/5, and 56.40% rating four or five.",
+          "The leading complaint themes were wait time (3,056; 6.50% of responses) [survey:data_0].",
+          "In June 2026, b01 had 53,000 responses, a mean satisfaction rating of 3.36/5, and 45.82% rating four or five.",
+          "The leading complaint themes were wait time (6,878; 12.98% of responses) [survey:data_1].",
+          "Between the compared periods, response volume changed by +6,000 (+12.77%), and mean rating changed by -0.28 points [comparison:comparison].",
+          "From May 2026 to June 2026, wait time complaints changed by +3,822 (+125.07%); prevalence changed by +6.48 percentage points [comparison:comparison].",
+          "FAQ [faq.txt#faq-02]: We target under 10 minutes for counter orders during off-peak hours. Peak hours (12–1 PM, 6–8 PM) may see 15–20 minute waits. These are operational targets and typical ranges, not measurements of every customer's actual wait. Staff should communicate expected delays at ordering and update customers when preparation takes longer. Survey complaints alone cannot establish the actual number of minutes waited or prove that a target was breached."
+        ],
+        "recommendation": "Recommendation: investigate the leading reported themes and validate causes operationally before changing staffing or pricing.",
+        "mode": "demo"
+      },
+      "correctness_checks": {
+        "expected_scope": true,
+        "expected_routing": true,
+        "expected_theme": true,
+        "comparison_count_delta": true,
+        "comparison_rate_delta": true,
+        "comparison_relative_change": true,
+        "data_0_count": true,
+        "data_0_mean": true,
+        "data_0_complaints": true,
+        "data_1_count": true,
+        "data_1_mean": true,
+        "data_1_complaints": true,
+        "has_retrieved_context": true,
+        "source_attribution": true,
+        "retrieved_wait_policy": true
+      },
+      "retrieval_observation": "Dense retrieval returned policy context; cosine similarity is heuristic. FAQ text explains policy, not causes or measured wait durations. See checks for target section presence."
+    },
+    {
+      "plan": {
+        "question": "How does current customer satisfaction compare with the company's CSAT target, and what action should management take?",
+        "tasks": [
+          {
+            "id": "data_0",
+            "agent": "data",
+            "operation": "metrics",
+            "depends_on": [],
+            "period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "business_id": "b01",
+            "theme": null,
+            "top_n": 3,
+            "query": null
+          },
+          {
+            "id": "rag",
+            "agent": "rag",
+            "operation": "retrieve",
+            "depends_on": [],
+            "period": null,
+            "business_id": "b01",
+            "theme": null,
+            "top_n": 3,
+            "query": "company CSAT target satisfaction score root cause review"
+          },
+          {
+            "id": "summary",
+            "agent": "summary",
+            "operation": "synthesize",
+            "depends_on": [
+              "data_0",
+              "rag"
+            ],
+            "period": null,
+            "business_id": "b01",
+            "theme": null,
+            "top_n": 3,
+            "query": null
+          }
+        ]
+      },
+      "agents_invoked": [
+        "data",
+        "rag",
+        "summary"
+      ],
+      "tool_calls": [
+        {
+          "agent": "data",
+          "name": "compute_metrics",
+          "arguments": {
+            "period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "business_id": "b01",
+            "theme": null,
+            "top_n": 3
+          },
+          "result": {
+            "period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "business_id": "b01",
+            "count": 53000,
+            "mean_rating": 3.3624150943396227,
+            "satisfied_pct": 45.820754716981135,
+            "themes": {
+              "food_quality": 11419,
+              "wait_time": 15692,
+              "staff_service": 8077,
+              "order_accuracy": 6861,
+              "cleanliness": 4912,
+              "value": 8161,
+              "satisfaction": 5898
+            },
+            "complaints": {
+              "food_quality": 4713,
+              "wait_time": 6878,
+              "staff_service": 3226,
+              "order_accuracy": 2643,
+              "cleanliness": 1726,
+              "value": 3292,
+              "satisfaction": 2137
+            },
+            "complaint_rates": {
+              "food_quality": 8.89245283018868,
+              "wait_time": 12.977358490566038,
+              "staff_service": 6.086792452830188,
+              "order_accuracy": 4.986792452830189,
+              "cleanliness": 3.2566037735849056,
+              "value": 6.211320754716981,
+              "satisfaction": 4.032075471698113
+            },
+            "top_complaints": [
+              [
+                "wait_time",
+                6878
+              ],
+              [
+                "food_quality",
+                4713
+              ],
+              [
+                "value",
+                3292
+              ]
+            ]
+          }
+        },
+        {
+          "agent": "data",
+          "name": "compute_csat",
+          "arguments": {
+            "rating_count": 53000,
+            "period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "business_id": "b01"
+          },
+          "result": {
+            "mean": 3.3624150943396227,
+            "satisfied_pct": 45.820754716981135
+          }
+        }
+      ],
+      "results": {
+        "data_0": {
+          "period": {
+            "start": "2026-06-01",
+            "end": "2026-06-30"
+          },
+          "business_id": "b01",
+          "count": 53000,
+          "mean_rating": 3.3624150943396227,
+          "satisfied_pct": 45.820754716981135,
+          "themes": {
+            "food_quality": 11419,
+            "wait_time": 15692,
+            "staff_service": 8077,
+            "order_accuracy": 6861,
+            "cleanliness": 4912,
+            "value": 8161,
+            "satisfaction": 5898
+          },
+          "complaints": {
+            "food_quality": 4713,
+            "wait_time": 6878,
+            "staff_service": 3226,
+            "order_accuracy": 2643,
+            "cleanliness": 1726,
+            "value": 3292,
+            "satisfaction": 2137
+          },
+          "complaint_rates": {
+            "food_quality": 8.89245283018868,
+            "wait_time": 12.977358490566038,
+            "staff_service": 6.086792452830188,
+            "order_accuracy": 4.986792452830189,
+            "cleanliness": 3.2566037735849056,
+            "value": 6.211320754716981,
+            "satisfaction": 4.032075471698113
+          },
+          "top_complaints": [
+            [
+              "wait_time",
+              6878
+            ],
+            [
+              "food_quality",
+              4713
+            ],
+            [
+              "value",
+              3292
+            ]
+          ]
+        },
+        "rag": {
+          "query": "company CSAT target satisfaction score root cause review",
+          "chunks": [
+            {
+              "id": "faq-04",
+              "source": "faq.txt",
+              "content": "Q: What is your CSAT target?\nA: We aim for a CSAT of 4.5+. Scores below 4.0 trigger a root-cause review with the operations team. For this demonstration, CSAT means the mean satisfaction rating on a one-to-five scale. A separate satisfied-response percentage counts ratings of four or five, but the 4.5 target does not apply to that percentage. Operations should inspect response volumes and recurring themes before selecting improvements; falling short of 4.5 does not automatically mean the below-4.0 review rule applies.",
+              "score": 0.8036824464797974
+            },
+            {
+              "id": "faq-05",
+              "source": "faq.txt",
+              "content": "Q: How are order accuracy and food quality checked?\nA: Staff check the item, requested substitutions, and packaging before handing over an order. Quality concerns should be recorded by menu item and shift. Repeated reports should prompt a check of preparation and handover steps. A complaint is evidence of a customer's reported experience; it does not establish the cause without further investigation.",
+              "score": 0.3185780644416809
+            },
+            {
+              "id": "faq-07",
+              "source": "faq.txt",
+              "content": "Q: How should management interpret survey trends and value feedback?\nA: Surveys are collected through mobile, web, and in-store channels. Participation is voluntary, so results may not represent all diners. Compare complaint proportions as well as counts when monthly survey volumes differ. Value feedback should inform a review of portion descriptions, menu clarity, and customer expectations. Proposed staffing or pricing changes require operational validation; this FAQ does not authorize automatic changes or guarantee that any intervention will improve scores.",
+              "score": 0.301688551902771
+            }
+          ],
+          "limitation": null
+        }
+      },
+      "summary": {
+        "answer": "In June 2026, b01 had 53,000 responses, a mean satisfaction rating of 3.36/5, and 45.82% rating four or five. The leading complaint themes were wait time (6,878; 12.98% of responses), food quality (4,713; 8.89% of responses), value (3,292; 6.21% of responses) [survey:data_0]. FAQ [faq.txt#faq-04]: We aim for a CSAT of 4.5+. Scores below 4.0 trigger a root-cause review with the operations team. For this demonstration, CSAT means the mean satisfaction rating on a one-to-five scale. A separate satisfied-response percentage counts ratings of four or five, but the 4.5 target does not apply to that percentage. Operations should inspect response volumes and recurring themes before selecting improvements; falling short of 4.5 does not automatically mean the below-4.0 review rule applies. The latest mean is 1.14 points below the FAQ target of 4.50/5. Recommendation: initiate the documented operations root-cause review because the mean is below 4.0.",
+        "evidence": [
+          "In June 2026, b01 had 53,000 responses, a mean satisfaction rating of 3.36/5, and 45.82% rating four or five.",
+          "The leading complaint themes were wait time (6,878; 12.98% of responses), food quality (4,713; 8.89% of responses), value (3,292; 6.21% of responses) [survey:data_0].",
+          "FAQ [faq.txt#faq-04]: We aim for a CSAT of 4.5+. Scores below 4.0 trigger a root-cause review with the operations team. For this demonstration, CSAT means the mean satisfaction rating on a one-to-five scale. A separate satisfied-response percentage counts ratings of four or five, but the 4.5 target does not apply to that percentage. Operations should inspect response volumes and recurring themes before selecting improvements; falling short of 4.5 does not automatically mean the below-4.0 review rule applies.",
+          "The latest mean is 1.14 points below the FAQ target of 4.50/5."
+        ],
+        "recommendation": "Recommendation: initiate the documented operations root-cause review because the mean is below 4.0.",
+        "mode": "demo"
+      },
+      "correctness_checks": {
+        "expected_scope": true,
+        "expected_routing": true,
+        "expected_theme": true,
+        "target_trigger": true,
+        "data_0_count": true,
+        "data_0_mean": true,
+        "data_0_complaints": true,
+        "has_retrieved_context": true,
+        "source_attribution": true,
+        "retrieved_csat_policy": true
+      },
+      "retrieval_observation": "Dense retrieval returned policy context; cosine similarity is heuristic. FAQ text explains policy, not causes or measured wait durations. See checks for target section presence."
+    }
+  ]
+}

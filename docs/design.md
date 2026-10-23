@@ -52,7 +52,7 @@ model's input window and avoid splitting policy qualifications. Store normalized
 vectors and metadata with model ID and FAQ SHA256. Ingestion is repeatable and
 no-ops on unchanged inputs; query refuses stale indexes. Top-k results below a
 configurable cosine threshold are removed. This threshold is a heuristic, not a
-calibrated relevance probability. Citations identify source and section. Only
+calibrated relevance probability. Citations identify source and section. The final narrative quotes the highest-scoring section in full; all top-k chunks remain in structured evidence and the synthesis prompt. Only
 retrieved policy sections may support recommendations; absent evidence is stated.
 
 ## Boundaries and limitations

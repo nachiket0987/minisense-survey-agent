@@ -109,3 +109,28 @@ def test_rating_comparison_is_explained():
     )
     assert "mean rating changed by" in out.summary.answer
     assert "response volume changed by" in out.summary.answer
+
+
+def test_faq_only_route_skips_analytics():
+    out = Orchestrator(SurveyStore(generate(100)), FakeIndex()).ask(
+        "What does the FAQ say about wait times?"
+    )
+    assert out.agents_invoked == ["rag", "summary"]
+    assert out.tool_calls == []
+
+
+def test_synthesis_rejects_unsupported_recommendation():
+    from minisense.agents import SummaryAgent
+    from minisense.provider import Selection
+
+    class UnsafeProvider:
+        def select_evidence(self, prompt):
+            return Selection(
+                evidence_order=list(range(len(prompt["evidence"]))),
+                recommendation="Invented policy: refund every order automatically.",
+            )
+
+    task = Task(id="summary", agent="summary", operation="synthesize")
+    context = {"rag": FakeIndex().retrieve("wait").model_dump(mode="json")}
+    with pytest.raises(ValueError, match="lacks supporting evidence"):
+        SummaryAgent(UnsafeProvider()).run(task, context, "wait times")
