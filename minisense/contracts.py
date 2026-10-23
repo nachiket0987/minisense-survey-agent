@@ -180,3 +180,4 @@ class Answer(Contract):
     tool_calls: list[ToolCall]
     results: dict[str, dict]
     summary: Summary
+    model_calls: list[dict] = Field(default_factory=list)

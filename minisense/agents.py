@@ -380,12 +380,17 @@ class Orchestrator:
         self.summary = SummaryAgent(provider)
 
     def ask(self, question: str) -> Answer:
+        results, trace, invoked = {}, [], []
+        exchanges = getattr(self.provider, "exchanges", [])
+        exchanges.clear()
+        self.last_trace = {"question": question, "stage": "planning", "results": results,
+                           "tool_calls": [], "agents_invoked": invoked, "model_calls": exchanges}
         plan = (
             self.provider.plan(question, self.store.latest)
             if self.provider
             else demo_plan(question, self.store.latest)
         )
-        results, trace, invoked = {}, [], []
+        self.last_trace["plan"] = plan.model_dump(mode="json")
         pending = list(plan.tasks)
         summary = None
         while pending:
@@ -393,6 +398,7 @@ class Orchestrator:
             if not ready:
                 raise ValueError("Task plan cannot be scheduled")
             for task in ready:
+                self.last_trace["stage"] = task.id
                 if task.agent == "data":
                     result = self.data.run(task, trace)
                 elif task.agent == "comparison":
@@ -405,6 +411,7 @@ class Orchestrator:
                     )
                     summary = result
                 results[task.id] = result.model_dump(mode="json")
+                self.last_trace["tool_calls"] = [c.model_dump(mode="json") for c in trace]
                 invoked.append(task.agent)
                 pending.remove(task)
         return Answer(
@@ -417,4 +424,5 @@ class Orchestrator:
                 if k != next(t.id for t in plan.tasks if t.agent == "summary")
             },
             summary=summary,
+            model_calls=exchanges,
         )

@@ -7,3 +7,4 @@ data/responses.json
 data/index/
 *.egg-info/
 .venv-*/
+.tools/

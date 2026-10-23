@@ -134,3 +134,19 @@ def test_synthesis_rejects_unsupported_recommendation():
     context = {"rag": FakeIndex().retrieve("wait").model_dump(mode="json")}
     with pytest.raises(ValueError, match="lacks supporting evidence"):
         SummaryAgent(UnsafeProvider()).run(task, context, "wait times")
+
+
+def test_failed_agent_retains_executed_results_and_resets_trace():
+    class FailingIndex:
+        def retrieve(self, query):
+            raise RuntimeError("unavailable")
+
+    app = Orchestrator(SurveyStore(generate(100)), FailingIndex())
+    with pytest.raises(RuntimeError):
+        app.ask("CSAT in June 2026")
+    assert app.last_trace["agents_invoked"] == ["data"]
+    assert app.last_trace["results"]["data_0"]["count"] == 53
+    assert len(app.last_trace["tool_calls"]) == 2
+    with pytest.raises(ValueError):
+        app.ask("unsupported")
+    assert app.last_trace["results"] == {}
