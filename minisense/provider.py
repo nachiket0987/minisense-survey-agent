@@ -46,6 +46,8 @@ class LLMProvider:
                 response.raise_for_status()
                 body = response.json()
                 message = body["choices"][0]["message"]
+                if not isinstance(message, dict):
+                    raise TypeError("Completion message must be an object")
                 exchange["response"] = self._safe({
                     k: message[k] for k in ("role", "content", "tool_calls") if k in message
                 })
@@ -146,14 +148,29 @@ class LLMProvider:
         return function["name"], json.loads(function["arguments"])
 
     def select_evidence(self, prompt):
-        message = self._chat(
-            [
+        required = list(range(len(prompt["evidence"])))
+        messages = [
                 {
                     "role": "system",
-                    "content": "Synthesize using only the supplied evidence. Return JSON with evidence_order (each evidence index exactly once) and recommendation (one allowed recommendation verbatim or null). Never add prose or alter facts.",
+                    "content": "Synthesize using only the supplied evidence. Return JSON with evidence_order (each evidence index exactly once) and recommendation (one allowed recommendation verbatim; null only if none are allowed). Never add prose or alter facts. Required evidence indices: " + json.dumps(required),
                 },
                 {"role": "user", "content": json.dumps(prompt, ensure_ascii=False)},
-            ],
-            response_format={"type": "json_object"},
-        )
-        return Selection.model_validate_json(message["content"])
+            ]
+        for attempt in range(3):
+            message = self._chat(messages, response_format={"type": "json_object"})
+            try:
+                selection = Selection.model_validate_json(message.get("content") or "")
+                if sorted(selection.evidence_order) != required:
+                    raise ValueError("Include every required evidence index exactly once")
+                allowed = prompt["allowed_recommendations"] or [None]
+                if selection.recommendation not in allowed:
+                    raise ValueError("Choose one allowed recommendation verbatim")
+                return selection
+            except ValueError:
+                if attempt == 2:
+                    raise ValueError("Summary failed validation after 3 attempts; inspect model trace") from None
+                messages += [
+                    {"role": "assistant", "content": message.get("content") or "{}"},
+                    {"role": "user", "content": "Invalid selection. evidence_order must be a permutation of " + json.dumps(required)
+                     + "; recommendation must be exactly one of " + json.dumps(prompt["allowed_recommendations"] or [None])},
+                ]

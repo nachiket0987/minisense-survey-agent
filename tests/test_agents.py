@@ -150,3 +150,24 @@ def test_failed_agent_retains_executed_results_and_resets_trace():
     with pytest.raises(ValueError):
         app.ask("unsupported")
     assert app.last_trace["results"] == {}
+
+
+def test_empty_retrieval_does_not_deny_other_retrieved_evidence():
+    from minisense.agents import evidence_statements
+
+    results = {"found": FakeIndex().retrieve("wait").model_dump(mode="json"),
+               "missing": Retrieval(query="staffing plan", chunks=[]).model_dump(mode="json")}
+    facts = evidence_statements(results)
+    assert any("faq.txt#faq-02" in fact for fact in facts)
+    assert not any(fact.startswith("No relevant FAQ evidence was retrieved;") for fact in facts)
+    assert any("staffing plan" in fact for fact in facts)
+
+
+def test_narrative_preserves_partial_and_multimonth_date_scopes():
+    from minisense.agents import evidence_statements
+
+    store = SurveyStore(generate(100))
+    for start, end in [("2026-05-15", "2026-05-20"), ("2026-05-15", "2026-06-15")]:
+        result = store.metrics(Period(start=start, end=end), "b01")
+        text = " ".join(evidence_statements({"data": result.model_dump(mode="json")}))
+        assert start in text and end in text

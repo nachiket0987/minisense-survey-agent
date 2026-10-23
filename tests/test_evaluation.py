@@ -136,3 +136,36 @@ def test_failure_trace_is_snapshot_not_shared_provider_buffer(tmp_path):
         evaluate(app, output)
     rows = json.loads(output.read_text())["results"]
     assert rows[0]["partial_trace"]["model_calls"][0]["question"] == rows[0]["question"]
+
+
+def test_evaluation_accepts_additional_context_task(tmp_path):
+    from minisense.agents import demo_plan
+    from minisense.contracts import Task, Plan
+
+    class AdditionalContext:
+        def plan(self, question, latest):
+            plan = demo_plan(question, latest)
+            extra = Task(id="extra_rag", agent="rag", operation="retrieve", query="CSAT target")
+            plan.tasks.insert(-1, extra)
+            plan.tasks[-1].depends_on.append(extra.id)
+            return Plan.model_validate(plan.model_dump())
+
+    app = Orchestrator(SurveyStore(generate(100)), FixtureIndex())
+    app.provider = AdditionalContext()
+    assert evaluate(app, tmp_path / "evaluation.json")["questions"] == 3
+
+
+def test_top_three_question_rejects_single_complaint_plan(tmp_path):
+    from minisense.agents import demo_plan
+
+    class TooFew:
+        def plan(self, question, latest):
+            plan = demo_plan(question, latest)
+            if question.startswith("What are the top three"):
+                plan.tasks[0].top_n = 1
+            return plan
+
+    app = Orchestrator(SurveyStore(generate(100)), FixtureIndex())
+    app.provider = TooFew()
+    with pytest.raises(ValueError, match="failed checks"):
+        evaluate(app, tmp_path / "evaluation.json")

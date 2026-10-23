@@ -119,3 +119,26 @@ def test_rate_limit_respects_bounded_retry_after(monkeypatch):
     monkeypatch.setattr(httpx.Client, "post", lambda *a, **kw: next(responses))
     assert provider._chat([])["content"] == "{}"
     assert [call["status"] for call in provider.exchanges] == [429, 200]
+
+
+def test_summary_repairs_omitted_evidence(monkeypatch):
+    monkeypatch.setenv("MINISENSE_BASE_URL", "http://localhost:1234/v1")
+    monkeypatch.setenv("MINISENSE_MODEL", "unit-test-model")
+    provider = LLMProvider()
+    replies = iter(['{"evidence_order":[0],"recommendation":null}',
+                    '{"evidence_order":[0,1],"recommendation":"review"}'])
+    monkeypatch.setattr(provider, "_chat", lambda *a, **kw: {"content": next(replies)})
+    result = provider.select_evidence({"evidence": ["a", "b"], "allowed_recommendations": ["review"]})
+    assert result.evidence_order == [0, 1]
+    assert result.recommendation == "review"
+
+
+def test_malformed_completion_message_fails_safely(monkeypatch):
+    monkeypatch.setenv("MINISENSE_BASE_URL", "http://localhost:1234/v1")
+    monkeypatch.setenv("MINISENSE_MODEL", "unit-test-model")
+    provider = LLMProvider()
+    response = httpx.Response(200, request=httpx.Request("POST", "http://localhost"),
+                              json={"choices": [{"message": []}]})
+    monkeypatch.setattr(httpx.Client, "post", lambda *a, **kw: response)
+    with pytest.raises(RuntimeError, match="invalid completion envelope"):
+        provider._chat([])

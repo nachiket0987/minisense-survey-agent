@@ -245,7 +245,7 @@ def evidence_statements(results):
     for key, value in results.items():
         if "mean_rating" in value:
             m = Metrics.model_validate(value)
-            label = m.period.start.strftime("%B %Y")
+            label = period_label(m.period)
             if not m.count:
                 facts.append(f"No survey responses matched {m.business_id} in {label}.")
                 continue
@@ -287,14 +287,14 @@ def evidence_statements(results):
                     else f'{change["rate_delta_pp"]:+.2f} percentage points'
                 )
                 facts.append(
-                    f'From {c.earlier.start:%B %Y} to {c.later.start:%B %Y}, {theme.replace("_"," ")} complaints changed by {change["count_delta"]:+,} ({rel}); prevalence changed by {rate} [comparison:{key}].'
+                    f'From {period_label(c.earlier)} to {period_label(c.later)}, {theme.replace("_"," ")} complaints changed by {change["count_delta"]:+,} ({rel}); prevalence changed by {rate} [comparison:{key}].'
                 )
             facts.extend(c.warnings)
         elif "chunks" in value:
             r = Retrieval.model_validate(value)
             if not r.chunks:
                 facts.append(
-                    "No relevant FAQ evidence was retrieved; policy context is unavailable."
+                    f"No relevant FAQ evidence for query {r.query!r}; context for that query is unavailable."
                 )
             else:
                 for chunk in r.chunks[:1]:
@@ -302,6 +302,12 @@ def evidence_statements(results):
                     text = chunk.content.split("\nA:", 1)[-1].strip()
                     facts.append(f"FAQ [{chunk.source}#{chunk.id}]: {text}")
     return facts
+
+
+def period_label(period):
+    if period == month_period(period.start.year, period.start.month):
+        return period.start.strftime("%B %Y")
+    return f"{period.start.isoformat()} through {period.end.isoformat()} (inclusive)"
 
 
 class SummaryAgent:

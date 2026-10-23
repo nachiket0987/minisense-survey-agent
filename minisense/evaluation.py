@@ -10,6 +10,7 @@ from .contracts import Plan, THEMES
 
 
 def check_answer(app, answer, number):
+    invoked = Counter(answer.agents_invoked)
     data = sorted((t for t in answer.plan.tasks if t.agent == "data"),
                   key=lambda t: t.period.start)
     periods = [("2026-05-01", "2026-05-31"), ("2026-06-01", "2026-06-30")]
@@ -17,14 +18,17 @@ def check_answer(app, answer, number):
     checks = {
         "expected_scope": [(str(t.period.start), str(t.period.end)) for t in data] == expected
         and all(t.business_id == "b01" for t in data),
-        "expected_routing": Counter(answer.agents_invoked) == Counter(
-            ["data", "data", "rag", "comparison", "summary"] if number == 1
-            else ["data", "rag", "summary"]),
+        "expected_routing": invoked["data"] == (2 if number == 1 else 1)
+        and invoked["comparison"] == (1 if number == 1 else 0)
+        and invoked["summary"] == 1 and invoked["rag"] >= 1
+        and invoked == Counter(t.agent for t in answer.plan.tasks),
         "expected_theme": bool(data) and all(
             t.theme in (None, "wait_time") if number == 1 else t.theme is None for t in data),
     }
     # Revalidate mutable models and verify dependencies, rather than task-list order.
     Plan.model_validate(answer.plan.model_dump())
+    if number == 0:
+        checks["requested_top_three"] = len(data) == 1 and data[0].top_n == 3
     for task in data:
         actual = answer.results.get(task.id, {})
         raw = app.store.select(task.period, task.business_id)
