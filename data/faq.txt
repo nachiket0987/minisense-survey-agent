@@ -1,0 +1,22 @@
+GreenLeaf Bistro — Customer Experience FAQ
+
+Q: What are your most popular menu items?
+A: Our top sellers are the Avocado Toast, Garden Bowl, and Cold Brew Coffee. GreenLeaf Bistro is a fictional neighbourhood restaurant serving breakfast, lunch, and early dinner. Customers can eat in or collect takeaway orders. Menu descriptions identify standard ingredients, and staff can explain substitutions before payment. Availability may change during the day; staff should explain an unavailable item before accepting an order.
+
+Q: What is your average wait time?
+A: We target under 10 minutes for counter orders during off-peak hours. Peak hours (12–1 PM, 6–8 PM) may see 15–20 minute waits. These are operational targets and typical ranges, not measurements of every customer's actual wait. Staff should communicate expected delays at ordering and update customers when preparation takes longer. Survey complaints alone cannot establish the actual number of minutes waited or prove that a target was breached.
+
+Q: How do you handle complaints?
+A: All complaints are escalated to the shift manager within 15 minutes. Refunds or replacements are offered for quality issues. The manager records the issue, checks the affected order, and explains the resolution. Customers should keep their receipt where possible so the team can locate the transaction. Escalation time and food preparation time are separate measures and should never be combined in reporting.
+
+Q: What is your CSAT target?
+A: We aim for a CSAT of 4.5+. Scores below 4.0 trigger a root-cause review with the operations team. For this demonstration, CSAT means the mean satisfaction rating on a one-to-five scale. A separate satisfied-response percentage counts ratings of four or five, but the 4.5 target does not apply to that percentage. Operations should inspect response volumes and recurring themes before selecting improvements; falling short of 4.5 does not automatically mean the below-4.0 review rule applies.
+
+Q: How are order accuracy and food quality checked?
+A: Staff check the item, requested substitutions, and packaging before handing over an order. Quality concerns should be recorded by menu item and shift. Repeated reports should prompt a check of preparation and handover steps. A complaint is evidence of a customer's reported experience; it does not establish the cause without further investigation.
+
+Q: How do you manage cleanliness and staff service?
+A: Dining tables are checked between parties and the counter is inspected throughout service. The shift manager reviews recurring cleanliness or staff-service feedback during team briefings. Coaching should use specific observations rather than assigning blame from an anonymous comment. Urgent safety concerns require immediate manager attention.
+
+Q: How should management interpret survey trends and value feedback?
+A: Surveys are collected through mobile, web, and in-store channels. Participation is voluntary, so results may not represent all diners. Compare complaint proportions as well as counts when monthly survey volumes differ. Value feedback should inform a review of portion descriptions, menu clarity, and customer expectations. Proposed staffing or pricing changes require operational validation; this FAQ does not authorize automatic changes or guarantee that any intervention will improve scores.
