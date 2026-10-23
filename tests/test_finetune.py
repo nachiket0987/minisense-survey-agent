@@ -56,6 +56,46 @@ def test_existing_checkpoint_is_not_overwritten(tmp_path):
     assert marker.read_text() == "existing checkpoint"
 
 
+def test_calibration_split_leakage_is_rejected():
+    from minisense.finetune import LABELS, validate_splits
+    train = [{"text": label, "label": label, "group": str(i)} for i, label in enumerate(LABELS)]
+    valid = [{"text": "validation", "label": LABELS[0], "group": "v"}]
+    test = [{"text": "held out", "label": LABELS[0], "group": "t"}]
+    with pytest.raises(ValueError, match="leakage"):
+        validate_splits(train, valid, test, [dict(test[0], text="calibration")])
+
+
+def test_confidence_policy_abstains_when_calibration_is_unreliable():
+    from minisense.finetune import fit_confidence_policy, confidence_summary
+    logits = [[9.0] + [0.0] * 7, [9.0] + [0.0] * 7]
+    policy = fit_confidence_policy(logits, [0, 1])
+    stats = confidence_summary(logits, [0, 1], policy)
+    assert stats["accepted"] == 0
+    assert stats["accepted_accuracy"] is None
+    assert stats["coverage"] == 0
+
+
+def test_assessment_gates_require_support_recall_and_selective_quality():
+    from minisense.finetune import assessment_gates
+    metrics = {"macro_f1": 0.99, "per_class": [{"support": 100, "recall": 1.0} for _ in range(8)],
+               "selective": {"coverage": 1.0, "accepted_accuracy": 0.99}}
+    assert all(assessment_gates(metrics).values())
+    metrics["per_class"][2]["recall"] = 0.94
+    assert not assessment_gates(metrics)["negative_recall"]
+    metrics["per_class"][2]["recall"] = 1.0
+    metrics["per_class"][0]["support"] = 1
+    assert not assessment_gates(metrics)["sufficient_class_support"]
+    metrics["selective"]["accepted_accuracy"] = None
+    assert not assessment_gates(metrics)["selective_accuracy"]
+
+
+def test_confidence_accuracy_preserves_the_95_percent_gate_boundary():
+    from minisense.finetune import confidence_summary
+    stats = confidence_summary([[9.0] + [0.0] * 7] * 20, [0] * 19 + [1],
+                               {"temperature": 1.0, "threshold": 0.5})
+    assert stats["accepted_accuracy"] == 0.95
+
+
 @pytest.mark.integration
 def test_real_cpu_encoder_training_and_checkpoint_prediction(tmp_path):
     from minisense.finetune import LABELS, train_model, predict
@@ -70,5 +110,7 @@ def test_real_cpu_encoder_training_and_checkpoint_prediction(tmp_path):
     assert len(report["test"]["per_class"]) == 8
     assert (tmp_path / "model.safetensors").exists()
     output = predict(str(tmp_path), "The food tasted fresh.")
-    assert output["label"] in LABELS
+    assert output["candidate_label"] in LABELS
+    assert output["label"] in (*LABELS, None)
+    assert output["review_required"] == output["abstained"]
     assert output["production_validated"] is False
