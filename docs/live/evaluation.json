@@ -483,7 +483,7 @@
         "evidence_preserved": true
       },
       "status": "passed",
-      "retrieval_observation": "Dense retrieval ranks short complete policy sections. Required-policy and final-answer grounding checks are recorded separately. Other top-k sections may be tangential; the .25 cosine cutoff is heuristic. Survey complaints establish reported experience, not causes or actual wait durations."
+      "retrieval_observation": "Required policy retrieved: faq-03 at rank 1 (cosine 0.5280). Other returned sections: faq-05, faq-06; these offer adjacent context rather than direct evidence for the requested policy. Complaint-handling policy supports escalation and quality remedies; the complaint ranking comes from survey counts, not FAQ text. The .25 cosine cutoff is heuristic; these three examples do not establish general retrieval accuracy."
     },
     {
       "plan": {
@@ -1120,7 +1120,7 @@
         "evidence_preserved": true
       },
       "status": "passed",
-      "retrieval_observation": "Dense retrieval ranks short complete policy sections. Required-policy and final-answer grounding checks are recorded separately. Other top-k sections may be tangential; the .25 cosine cutoff is heuristic. Survey complaints establish reported experience, not causes or actual wait durations."
+      "retrieval_observation": "Required policy retrieved: faq-02 at rank 1 (cosine 0.6226). Other returned sections: faq-03; these offer adjacent context rather than direct evidence for the requested policy. The wait policy distinguishes off-peak targets and peak ranges; survey complaints contain no measured wait durations and cannot prove a target breach. The .25 cosine cutoff is heuristic; these three examples do not establish general retrieval accuracy."
     },
     {
       "plan": {
@@ -1674,7 +1674,7 @@
         "evidence_preserved": true
       },
       "status": "passed",
-      "retrieval_observation": "Dense retrieval ranks short complete policy sections. Required-policy and final-answer grounding checks are recorded separately. Other top-k sections may be tangential; the .25 cosine cutoff is heuristic. Survey complaints establish reported experience, not causes or actual wait durations."
+      "retrieval_observation": "Required policy retrieved: faq-04 at rank 1 (cosine 0.5673). No chunk passed the threshold for queries: 'business context'. The CSAT policy supplies the 4.5 mean-rating target and below-4.0 review trigger; neither threshold applies to the satisfied-response percentage. The .25 cosine cutoff is heuristic; these three examples do not establish general retrieval accuracy."
     }
   ]
 }

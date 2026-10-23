@@ -32,6 +32,8 @@ No paid service is invoked by default, and ChatGPT Plus is not an API credential
 See [design](docs/design.md), [requirements](docs/requirements_matrix.md),
 [reference review](docs/reference_review.md), and [verification](docs/verification.md).
 For the assessment discussion, see [interview notes](docs/interview_notes.md).
+The [submission completion report](docs/submission_polish_verification.md) records
+the latest 55-test suite, documentation polish and optional CPU training evidence.
 
 ## Prerequisites and installation
 
@@ -110,9 +112,11 @@ canonical source, so the large dataset is intentionally regenerated after checko
 .\.venv\Scripts\python.exe -m minisense ask "How does current customer satisfaction compare with the company's CSAT target, and what action should management take?"
 ```
 
-Actual executed answers, retrieved text and retrieval observations are in
-[the evaluation report](docs/rag_evaluation.md); full machine-readable plans,
-tool traces, results and correctness checks are in [evaluation.json](docs/evaluation.json).
+Actual live LLM answers, retrieved text and question-specific retrieval
+observations are in [the live report](docs/live/rag_evaluation.md); full model
+requests, Python tool traces and checks are in [live evaluation.json](docs/live/evaluation.json).
+The [historical demo report](docs/rag_evaluation.md) and
+[demo JSON](docs/evaluation.json) remain unchanged and explicitly labeled.
 The evaluator checks expected scope/routing as well as independent calculations.
 See [dataset validation](docs/dataset_validation.json) for counts and hash.
 
@@ -186,7 +190,7 @@ constrained, after measuring quantization effects. Full fine-tuning is a baselin
 only if adaptation quality justifies its larger memory and checkpoint cost. Our
 Windows laptop is suitable for preparation and inference experiments, not assumed
 to provide useful GPU training throughput. Any rented GPU requires a separate
-approved budget; this submission runs no training job.
+approved budget; Qwen adapter training is not executed.
 
 Use Hugging Face Transformers Trainer with PEFT, versioned JSONL records, a pinned
 model revision, fixed seeds, bounded sequence length, gradient accumulation, and
@@ -210,6 +214,18 @@ classification schema, training configuration, and serving serializers separate,
 so input formats or label changes require adapters and versioning rather than
 rewriting the training pipeline.
 
+## Optional executable fine-tuning baseline
+
+An isolated eight-label CPU encoder baseline is implemented in
+`minisense/finetune.py`, using the existing dependencies. It validates JSONL inputs,
+rejects cross-split text/group leakage, updates encoder weights, reports held-out
+metrics, saves a checkpoint and reloads it for prediction. See
+[instructions and limitations](docs/finetuning_baseline.md) and
+[actual smoke metrics](docs/finetuning/smoke_training_report.json).
+The 16/8/8 artificial splits verify machinery; test macro-F1 was only 0.0357 and
+the model is explicitly not production-ready. The Qwen/LoRA approach above remains
+a design proposal. No hosted training service or paid resource is used.
+
 ## Trade-offs and known limitations
 
 Plain Python scheduling avoids LangGraph overhead for a short DAG. NumPy exact
@@ -221,8 +237,7 @@ unsupported scopes fail where recognized. It is not a general natural-language
 understanding system. Production text classification is proposed, not implemented;
 analytics relies on synthetic annotations. Changes are descriptive, not causal
 or statistically significant claims. Dataset generation is deterministic; model
-embeddings may vary slightly across hardware/library revisions. No fine-tuning job
-was performed. Windows runtime evidence is in docs/verification.md. The constrained
+embeddings may vary slightly across hardware/library revisions. Only a small CPU encoder fine-tuning smoke job was performed; it does not establish production quality. Windows runtime evidence is in docs/verification.md. The constrained
 summary is a coherent paragraph built from validated statements: the model orders
 evidence and selects a recommendation; it does not freely rewrite facts. This meets
 the assignment's structured-output/narrative requirement with limited style.

@@ -45,7 +45,7 @@ uv pip install --python $py -r requirements.txt
 
 The dataset is already included; `python -m minisense generate` can recreate it.
 If Python 3.12 is unavailable, README documents the tested workspace-local uv
-bootstrap. Windows continuation passed 48 tests, real model ingestion and all
+bootstrap. The latest suite passed 55 tests, real model ingestion and all
 three live Groq questions (58 checks). See docs/verification.md for evidence and
 docs/live for actual traces. Historical demo artifacts remain unchanged.
 

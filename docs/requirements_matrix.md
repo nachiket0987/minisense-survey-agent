@@ -1,21 +1,21 @@
 # Requirements coverage
 
-Authority: supplied Assignment(1).docx, including both appendices. The user's
+Authority: supplied Assignment.docx, including both appendices. The user's
 mission adds engineering and delivery requirements beyond the original assessment.
 Implemented means code exists; verified means the listed runtime evidence exists.
 No live LLM success or training run is implied by a unit test.
 
 Windows continuation: live/evaluation.json passed all three required Groq questions
 and 58 independent checks; live/probes.json records passing paraphrase, exact-date
-and empty-business checks. The complete Windows suite passed 48 tests including
-real embeddings. Historical demo evidence is preserved. No training claim is made.
+and empty-business checks. The complete Windows suite passed 55 tests including
+real embeddings and CPU encoder fine-tuning. Historical demo evidence is preserved. The optional toy baseline is not production validation.
 Publication target is now nachiket0987/minisense-survey-agent, explicitly authorized
 by the user instead of the handoff's original owner.
 
 | Expectation | Implementation | Source or artifact | Verification | Status |
 |---|---|---|---|---|
 | Runnable small AI analysis system | CLI and optional compatible LLM | minisense/cli.py, provider.py | CLI commands; provider unit tests | Live verified on Windows; live/evaluation.json |
-| Two-level architecture | Orchestrator and four specialists | minisense/agents.py | test_agents.py; evaluation plans | Verified in demo |
+| Two-level architecture | Orchestrator and four specialists | minisense/agents.py | test_agents.py; evaluation plans | Verified in live plans and traces |
 | Natural-language planning | Validated LLM JSON plan; limited offline grammar | agents.py, provider.py | plan and unsupported-scope tests | Live planning and validation verified |
 | Structured task input | Pydantic Task and Period | contracts.py | agent/operation, dependency and scope tests | Verified |
 | Structured sub-agent output | Metrics, Comparison, Retrieval, Summary | contracts.py, agents.py | validation plus JSON traces | Verified |
@@ -35,16 +35,16 @@ by the user instead of the handoff's original owner.
 | Local vector store and top-k | Persisted normalized NumPy vectors, exact cosine search | retrieval.py | actual index and semantic retrieval | Verified |
 | Repeatable ingestion | Model/FAQ signature and no-op reuse | retrieval.py | cache/stale-index/reingestion tests | Verified |
 | Attributed retrieval and absent-context handling | IDs, source, content, score; threshold limitation | contracts.py, retrieval.py | empty-context and source tests | Verified |
-| Inject context and metrics into final prompt | structured_results plus evidence sent to provider | agents.py, provider.py | mocked provider path; code review | Live synthesis prompt and result verified |
-| Three questions with chunks and answers | Evaluation CLI with independent correctness checks | docs/evaluation.json, rag_evaluation.md | 33 checks across 3 executed questions | Verified with real embeddings and demo planning |
-| Comment on retrieval strengths/shortfalls | Per-question observations and report | rag_evaluation.md | inspected actual ranked chunks | Verified |
+| Inject context and metrics into final prompt | structured_results plus evidence sent to provider | agents.py, provider.py | actual live model_calls synthesis payload; code review | Live synthesis prompt and result verified |
+| Three questions with chunks and answers | Evaluation CLI with independent correctness checks | docs/live/evaluation.json, live/rag_evaluation.md | 58 checks across 3 live questions; repeated in clean checkout | Live verified; demo evidence preserved separately |
+| Comment on retrieval strengths/shortfalls | Per-question observations and report | live/rag_evaluation.md; clean-install/rag_evaluation.md | question-specific ranks, scores, adjacent sections and empty queries | Verified against recorded live results |
 | 300–500-word fine-tuning proposal, all six aspects | 424-word proposal embedded in README | README.md, docs/fine_tuning.md | word count and scope review | Verified |
-| Optional fine-tuning code | Not necessary for required assessment | docs/fine_tuning.md | explicitly no training claims | Deferred optional bonus |
+| Optional fine-tuning code | CPU eight-label full encoder baseline, separate from Qwen/LoRA proposal | minisense/finetune.py; docs/finetuning_baseline.md | real four-step training, encoder updates, held-out metrics, checkpoint prediction; integration test | Executed smoke baseline; production quality not established |
 | Tests and errors | pytest; clear missing-data/index/provider failures | tests/, __main__.py | full suite and failure-path tests | See verification.md |
 | Reference implementation audit | Five snapshot reviews, real implementation files | reference_review.md | clone SHAs and inspected modules | Complete |
 | Personalization and attribution | Nachiket maintainer, no copied configuration or source | README, pyproject.toml, LICENSE | identity and secret scan | Complete |
-| GitHub repository and incremental commits | Local implementation branch with staged commits | Git history; supplied bundle | git log and git bundle verify | Local history complete; publication tracked in verification.md |
-| Windows VS Code reproduction | PowerShell commands without activation requirement | README.md | Actual Windows commands, 48 tests and live evaluation | Windows verified; clean-checkout evidence in verification.md |
+| GitHub repository and incremental commits | Local implementation branch with staged commits | Git history; public GitHub repository | published branch and independent checkout | Published; full history preserved |
+| Windows VS Code reproduction | PowerShell commands without activation requirement | README.md | Actual Windows commands; original 48-test clean run plus current suite and training smoke | Windows verified; clean-checkout evidence in verification.md |
 
 ## Assumptions
 

@@ -20,6 +20,5 @@ by the third question before saving. Treat that particular partial model trace a
 unreliable; the defect was reproduced and fixed with deep snapshots. Later traces
 retain independent question histories.
 
-Historical demo artifacts in the parent docs directory are preserved. No fine
-tuning or paid capacity was enabled. See ../verification.md for commands, tests,
+Historical demo artifacts in the parent docs directory are preserved. These live runs performed no training or paid capacity activation. A later optional CPU encoder smoke run is documented separately in ../finetuning_baseline.md. See ../verification.md for commands, tests,
 review and clean-install results.

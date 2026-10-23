@@ -8,6 +8,37 @@ from pathlib import Path
 
 from .contracts import Plan, THEMES
 
+POLICIES = ("Q: How do you handle complaints?", "Q: What is your average wait time?", "Q: What is your CSAT target?")
+
+
+def retrieval_observation(results, number):
+    matches, adjacent, empty = [], [], []
+    for value in results.values():
+        if "chunks" not in value:
+            continue
+        if not value["chunks"]:
+            empty.append(value["query"])
+        for rank, chunk in enumerate(value["chunks"], 1):
+            if POLICIES[number] in chunk["content"]:
+                score = "unavailable" if chunk.get("score") is None else f'{chunk["score"]:.4f}'
+                matches.append(f'{chunk["id"]} at rank {rank} (cosine {score})')
+            else:
+                adjacent.append(chunk["id"])
+    text = ("Required policy retrieved: " + "; ".join(matches) + ". " if matches
+            else "Required policy was not retrieved; the answer cannot be grounded in that policy. ")
+    if adjacent:
+        text += "Other returned sections: " + ", ".join(dict.fromkeys(adjacent)) + "; these offer adjacent context rather than direct evidence for the requested policy. "
+    if empty:
+        text += "No chunk passed the threshold for queries: " + ", ".join(repr(q) for q in empty) + ". "
+    text += (
+        "Complaint-handling policy supports escalation and quality remedies; the complaint ranking comes from survey counts, not FAQ text."
+        if number == 0 else
+        "The wait policy distinguishes off-peak targets and peak ranges; survey complaints contain no measured wait durations and cannot prove a target breach."
+        if number == 1 else
+        "The CSAT policy supplies the 4.5 mean-rating target and below-4.0 review trigger; neither threshold applies to the satisfied-response percentage."
+    )
+    return text + " The .25 cosine cutoff is heuristic; these three examples do not establish general retrieval accuracy."
+
 
 def check_answer(app, answer, number):
     invoked = Counter(answer.agents_invoked)
@@ -78,7 +109,7 @@ def check_answer(app, answer, number):
     checks["has_retrieved_context"] = bool(chunks)
     checks["source_attribution"] = bool(chunks) and all(
         c["source"] == "faq.txt" and c["id"].startswith("faq-") for c in chunks)
-    policy = ["Q: How do you handle complaints?", "Q: What is your average wait time?", "Q: What is your CSAT target?"][number]
+    policy = POLICIES[number]
     # Presence in retrieval alone is insufficient: the final answer must use it.
     relevant = [c for c in chunks if policy in c["content"]]
     checks["retrieved_required_policy"] = bool(relevant)
@@ -101,6 +132,11 @@ def write_report(app, output, records):
         "results": records,
     }
     output.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    write_markdown(payload, output)
+
+
+def write_markdown(payload, output):
+    records = payload["results"]
     markdown = ["# Executed RAG evaluation", "", f'Mode: {payload["mode"]}; model: {payload["model"]}. Actual embedding retrieval. Full traces: `{output.name}`.', "", payload["synthesis"], ""]
     for record in records:
         markdown += [f'## {record["question"]}', "", f'Status: {record["status"]}', ""]
@@ -125,10 +161,7 @@ def evaluate(app, output: Path):
             checks = check_answer(app, answer, number)
             record.update(question=question, correctness_checks=checks,
                           status="passed" if all(checks.values()) else "failed")
-            record["retrieval_observation"] = (
-                "Dense retrieval ranks short complete policy sections. Required-policy and final-answer grounding checks are recorded separately. "
-                "Other top-k sections may be tangential; the .25 cosine cutoff is heuristic. "
-                "Survey complaints establish reported experience, not causes or actual wait durations.")
+            record["retrieval_observation"] = retrieval_observation(answer.results, number)
         except (ValueError, RuntimeError, KeyError, IndexError, TypeError, FileNotFoundError) as exc:
             record = {"question": question, "status": "failed", "error_type": type(exc).__name__,
                       "correctness_checks": {"completed": False},

@@ -1,5 +1,11 @@
 # Execution and review evidence
 
+Latest submission completion: **55 tests passed**, including an optional real CPU
+encoder training/checkpoint smoke test. Live retrieval commentary and stale
+coverage rows are corrected. See [submission_polish_verification.md](submission_polish_verification.md)
+for the new evidence and poor toy classifier metrics; the earlier execution
+records below retain their original scope and dates.
+
 ## Windows continuation — 23 October 2026
 
 The sections below this continuation retain historical Linux evidence. Current

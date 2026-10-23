@@ -22,7 +22,7 @@ constrained, after measuring quantization effects. Full fine-tuning is a baselin
 only if adaptation quality justifies its larger memory and checkpoint cost. Our
 Windows laptop is suitable for preparation and inference experiments, not assumed
 to provide useful GPU training throughput. Any rented GPU requires a separate
-approved budget; this submission runs no training job.
+approved budget; Qwen adapter training is not executed.
 
 Use Hugging Face Transformers Trainer with PEFT, versioned JSONL records, a pinned
 model revision, fixed seeds, bounded sequence length, gradient accumulation, and

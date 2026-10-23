@@ -189,3 +189,19 @@ def test_csat_theme_projection_keeps_all_response_ratings(tmp_path):
     assert record["correctness_checks"]["data_0_count"]
     assert record["correctness_checks"]["data_0_mean"]
     assert record["correctness_checks"]["target_trigger"]
+
+
+def test_retrieval_commentary_uses_actual_ranks_and_empty_queries():
+    from minisense.evaluation import retrieval_observation
+    results = {"policy": {"query": "CSAT target", "chunks": [
+        {"id": "faq-07", "score": 0.6, "content": "Other management guidance"},
+        {"id": "faq-04", "score": 0.5, "content": "Q: What is your CSAT target?\nA: 4.5+."}]},
+        "extra": {"query": "business context", "chunks": []}}
+    text = retrieval_observation(results, 2)
+    assert "faq-04" in text and "rank 2" in text and "0.5000" in text
+    assert "business context" in text
+    assert "faq-07" in text
+    assert "satisfied-response percentage" in text
+    missing = retrieval_observation({"rag": {"query": "wait", "chunks": []}}, 1)
+    assert "not retrieved" in missing
+    assert "measured wait" in missing

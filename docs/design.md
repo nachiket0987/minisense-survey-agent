@@ -70,7 +70,7 @@ retrieved policy sections may support recommendations; absent evidence is stated
 The demo grammar supports explicit months, two-month comparisons, known themes,
 CSAT and FAQ requests, and b01 filters; unsupported requests fail. LLM mode handles
 more language variation but must obey the same contracts. No arbitrary SQL,
-Python execution, web browsing, UI, microservices, or training job. JSON is loaded
+Python execution, web browsing, UI or microservices in the agent. Optional CPU encoder training is isolated in minisense.finetune and never runs during agent inference. JSON is loaded
 and validated once per process, with in-memory filtering; CLI invocations reload,
 but agents within an invocation share the store. Larger or multi-user deployments
 should use a database. Model downloads require network access; runtime provider
