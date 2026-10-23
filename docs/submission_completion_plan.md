@@ -21,7 +21,7 @@ hosted API, GPU rental or integration into survey analytics is required.
   answers, timestamps and correctness checks.
 - [x] Update coverage, README, training instructions and verification with actual
   execution evidence and remaining limits. Preserve the required design word count.
-- [ ] Run the full suite, CLI training/prediction and artifact/secret checks; review
+- [x] Run the full suite, CLI training/prediction and artifact/secret checks; review
   connected code; commit, push and verify the public branch.
 
 Key rotation is an account-owner action. The pasted key will not be used or
