@@ -12,7 +12,7 @@ headers are excluded. This is constrained extractive synthesis: the model choose
 evidence order and a supported recommendation; Python preserves numeric facts and
 full policy qualifications. It is not unrestricted prose generation.
 
-Rejected runs are retained in attempt-01 through attempt-03. They demonstrate
+Rejected runs are retained in [the evaluation archive](../archive/evaluations/live/), attempt-01 through attempt-03. They demonstrate
 omitted retrieval, malformed plans, free-tier throttling, an overly strict routing
 check and an omitted evidence item. None is labeled successful. Attempt-01 exposed
 a shared mutable trace buffer: its second question's model_calls were overwritten

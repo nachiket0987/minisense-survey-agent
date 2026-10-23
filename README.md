@@ -32,7 +32,7 @@ No paid service is invoked by default, and ChatGPT Plus is not an API credential
 See [design](docs/design.md), [requirements](docs/requirements_matrix.md),
 [reference review](docs/reference_review.md), and [verification](docs/verification.md).
 For the assessment discussion, see [interview notes](docs/interview_notes.md).
-The [submission completion report](docs/submission_polish_verification.md) records
+The [verification report](docs/verification.md#latest-submission-completion) records
 the latest 55-test suite, documentation polish and optional CPU training evidence.
 
 ## Prerequisites and installation
@@ -272,3 +272,6 @@ Follow installation and LLM configuration above. The default branch is
 `implementation`; generated data, vector indexes and environments must be built
 locally. The archive's parent-directory Git bundle remains available for recovering
 the original handoff history, but is not required for a GitHub checkout.
+
+Development handoffs, completed plans and rejected evaluation attempts are
+kept separately in [the history archive](docs/archive/README.md).
